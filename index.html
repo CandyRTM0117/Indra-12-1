@@ -1,13 +1,393 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
-    <title>Document</title>
+    <title>Индра Кибер Сургууль - Мэдээллийн Дэлгэц</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    <script src="index.js"></script>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <svg class="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+            </svg>
+            <div>
+                <h1 class="header-title">Индра Кибер Сургууль</h1>
+                <p class="header-subtitle">Мэдээллийн Дэлгэц</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="main-content">
+        <div class="container">
+            <!-- Main Dashboard (default view) -->
+            <div id="mainDashboard" class="section-view active">
+                <!-- Welcome Section -->
+                <div class="welcome-card">
+                    <h1 class="welcome-title">Сайн байна уу!</h1>
+                    <p class="welcome-subtitle">Индра Кибер Сургуулийн мэдээллийн систем</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-blue">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Өнөөдрийн хичээл</div>
+                    </div>
+                    <div class="stat-card stat-purple">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value">428</div>
+                        <div class="stat-label">Идэвхтэй сурагчид</div>
+                    </div>
+                    <div class="stat-card stat-orange">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Энэ сарын арга хэмжээ</div>
+                    </div>
+                    <div class="stat-card stat-green">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Амжилтын түвшин</div>
+                    </div>
+                </div>
+
+                <!-- Announcements Carousel -->
+                <div class="announcements-carousel">
+                    <h2 class="section-title">Мэдээлэл</h2>
+                    <div class="carousel-container">
+                        <div class="carousel-slide active">
+                            <div class="announcement-content">
+                                <h3>Улирлын шалгалт эхэллээ</h3>
+                                <p>Шалгалтын хуваарийг сайтар судлаарай</p>
+                                <span class="time-badge">2 цагийн өмнө</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="announcement-content">
+                                <h3>Роботын уралдаан</h3>
+                                <p>Бямба гараг 10:00 цагт эхэлнэ</p>
+                                <span class="time-badge">5 цагийн өмнө</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="announcement-content">
+                                <h3>Эцэг эхийн хурал</h3>
+                                <p>11-р сарын 15-нд болно</p>
+                                <span class="time-badge">1 өдрийн өмнө</span>
+                            </div>
+                        </div>
+                        <div class="carousel-indicators">
+                            <span class="indicator active"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-text">
+                    <p>Баруун талын цэсээс мэдээлэл харах боломжтой</p>
+                </div>
+            </div>
+
+            <!-- Class Schedule View -->
+            <div id="scheduleView" class="section-view">
+                <div class="page-header header-cyan">
+                    <div class="header-content-inner">
+                        <svg class="page-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <div>
+                            <h1 class="page-title">Хичээлийн хуваарь</h1>
+                            <p class="page-subtitle">Ангиар шүүж харах боломжтой</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <label class="filter-label">Анги сонгох:</label>
+                    <div class="class-filter" id="classFilter"></div>
+                </div>
+
+                <div id="scheduleList" class="schedule-list"></div>
+            </div>
+
+            <!-- Clubs View -->
+            <div id="clubsView" class="section-view">
+                <div class="page-header header-purple">
+                    <div class="header-content-inner">
+                        <svg class="page-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <div>
+                            <h1 class="page-title">Дугуйлангийн хуваарь</h1>
+                            <p class="page-subtitle">Төрлөөр шүүж харах боломжтой</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <label class="filter-label">Төрөл сонгох:</label>
+                    <div class="type-filter" id="typeFilter"></div>
+                </div>
+
+                <div id="clubsList" class="clubs-grid"></div>
+            </div>
+
+            <!-- Psychologist View -->
+            <div id="psychologistView" class="section-view">
+                <div class="page-header header-pink">
+                    <div class="header-content-inner">
+                        <svg class="page-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                        <div>
+                            <h1 class="page-title">Сэтгэлзүйчийн цаг</h1>
+                            <p class="page-subtitle">Нээлттэй цагууд болон бүртгэлийн мэдээлэл</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="psychologist-info-grid">
+                    <div class="info-card">
+                        <h3>Сэтгэлзүйч</h3>
+                        <div class="info-details">
+                            <p><span class="label-cyan">Нэр:</span> Д-р Б.Баярмаа</p>
+                            <p><span class="label-cyan">Мэргэжил:</span> Клиник сэтгэлзүй</p>
+                            <p><span class="label-cyan">Өрөө:</span> 401</p>
+                            <p><span class="label-cyan">Утас:</span> 9999-8888</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card qr-card">
+                        <h3>Бүртгүүлэх</h3>
+                        <div class="qr-code">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                            </svg>
+                        </div>
+                        <p class="qr-text">QR код уншуулж бүртгүүлэх</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Анхаар!</h3>
+                        <ul class="instruction-list">
+                            <li>✓ Цаг авахдаа нууцлал баталгаатай</li>
+                            <li>✓ 1 цаг нь 45 минут үргэлжилнэ</li>
+                            <li>✓ Цуцлах бол 24 цагийн өмнө мэдэгдэнэ</li>
+                            <li>✓ Эцэг эхтэй хамт ирж болно</li>
+                            <li>✓ Яаралтай тохиолдолд шууд өрөөнд хандана уу</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="availableSlots" class="available-slots"></div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-box green"></div>
+                        <span>Нээлттэй</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box red"></div>
+                        <span>Захиалагдсан</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Food Menu View -->
+            <div id="foodView" class="section-view">
+                <div class="page-header header-orange">
+                    <div class="header-content-inner">
+                        <svg class="page-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <div>
+                            <h1 class="page-title">Хоолны меню</h1>
+                            <p class="page-subtitle">7 хоногийн хоолны хуваарь</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="meal-times-grid">
+                    <div class="meal-time-card yellow">
+                        <span class="meal-emoji">🌅</span>
+                        <h3>Өглөөний цай</h3>
+                        <p>08:00 - 08:30</p>
+                    </div>
+                    <div class="meal-time-card orange">
+                        <span class="meal-emoji">☀️</span>
+                        <h3>Өдрийн хоол</h3>
+                        <p>12:00 - 13:00</p>
+                    </div>
+                    <div class="meal-time-card purple">
+                        <span class="meal-emoji">🌙</span>
+                        <h3>Үдийн хоол</h3>
+                        <p>17:00 - 18:00</p>
+                    </div>
+                </div>
+
+                <div id="weeklyMenu" class="weekly-menu"></div>
+
+                <div class="allergen-info">
+                    <div class="allergen-header">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                        <h3>Анхаар</h3>
+                    </div>
+                    <p>Хэрвээ харшилтай бол сургуулийн хоолны албанд мэдэгдэнэ үү. Цэсийг өөрчлөх боломжтой.</p>
+                </div>
+            </div>
+
+            <!-- Student Rules View -->
+            <div id="rulesView" class="section-view">
+                <div class="page-header header-indigo">
+                    <div class="header-content-inner">
+                        <svg class="page-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <div>
+                            <h1 class="page-title">Сурагчийн дүрэм</h1>
+                            <p class="page-subtitle">Сургуулийн дотоод журам</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rulesGrid" class="rules-grid"></div>
+
+                <div class="prohibited-section">
+                    <h3 class="prohibited-title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Хориотой зүйлс
+                    </h3>
+                    <div id="prohibitedList" class="prohibited-list"></div>
+                </div>
+
+                <div class="consequences-section">
+                    <h3 class="consequences-title">⚠️ Дүрэм зөрчсөн тохиолдол</h3>
+                    <div class="consequences-list">
+                        <p>• Анхны удаа: Сануулга өгнө</p>
+                        <p>• Хоёр дахь удаа: Эцэг эхэд мэдэгдэнэ</p>
+                        <p>• Гурав дахь удаа: Сургуулийн удирдлагад хуралдана</p>
+                        <p>• Ноцтой зөрчил: Тусгай арга хэмжээ авна</p>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <p>Асуулт байвал багш, захирлын туслахад хандана уу</p>
+                    <p class="phone-number">📞 Яаралтай: 7777-6666</p>
+                </div>
+            </div>
+
+            <!-- Events & News View -->
+            <div id="eventsView" class="section-view">
+                <div class="page-header header-green">
+                    <div class="header-content-inner">
+                        <svg class="page-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                        </svg>
+                        <div>
+                            <h1 class="page-title">Эвент, Мэдээ</h1>
+                            <p class="page-subtitle">Сүүлийн үеийн мэдээлэл</p>
+                            <p class="update-time" id="updateTime"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="events-section">
+                    <h2 class="subsection-title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Удахгүй болох арга хэмжээ
+                    </h2>
+                    <div id="upcomingEvents" class="events-grid"></div>
+                </div>
+
+                <div class="news-section">
+                    <h2 class="subsection-title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                        </svg>
+                        Сүүлийн мэдээ
+                    </h2>
+                    <div id="latestNews" class="news-list"></div>
+                </div>
+
+                <div class="auto-update-notice">
+                    <p>⚡ Мэдээлэл автоматаар шинэчлэгдэнэ. Дараагийн шинэчлэл: <span id="nextUpdate"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Arrow Button -->
+    <button id="sidebarToggle" class="sidebar-toggle">
+        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Цэс</h2>
+            <button id="closeSidebar" class="close-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item" data-section="schedule">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <span>Хичээлийн хуваарь</span>
+            </button>
+            <button class="nav-item" data-section="clubs">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <span>Дугуйлангийн хуваарь</span>
+            </button>
+            <button class="nav-item" data-section="psychologist">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+                <span>Сэтгэлзүйчийн цаг</span>
+            </button>
+            <button class="nav-item" data-section="food">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Хоолны меню</span>
+            </button>
+            <button class="nav-item" data-section="rules">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <span>Сурагчийн дүрэм</span>
+            </button>
+            <button class="nav-item" data-section="events">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                </svg>
+                <span>Эвент, Мэдээ</span>
+            </button>
+        </nav>
+
+        <button id="homeBtn" class="home-btn">Нүүр хуудас руу буцах</button>
+    </aside>
+
+    <script src="script.js"></script>
 </body>
 </html>
