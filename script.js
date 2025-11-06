@@ -172,6 +172,146 @@ const closeSidebar = document.getElementById('closeSidebar');
 const homeBtn = document.getElementById('homeBtn');
 const navItems = document.querySelectorAll('.nav-item');
 
+
+
+
+
+
+
+
+const headerline = document.getElementById("header-line")
+
+let time = 0;
+let loopvalue = 0;
+let maxseconds = 2;
+let timer = null; // store interval ID
+let isRunning = false; // track state
+
+
+
+
+
+
+let isPaused = true;
+
+// Get elements
+const button = document.getElementById('playPauseBtn');
+const icon = document.getElementById('buttonIcon');
+
+// Function to update button icon
+function updateButton() {
+  if (isPaused) {
+    // Show Play icon
+    icon.innerHTML = '<div class="play-icon"></div>';
+  } else {
+    // Show Pause icon
+    icon.innerHTML = `
+      <div class="pause-icon">
+        <div class="pause-bar"></div>
+        <div class="pause-bar"></div>
+      </div>
+    `;
+  }
+}
+
+
+
+
+
+
+function toggleTimer(){
+    if ( isPaused === true ) {
+        timer = setInterval(() => {
+            console.log(isPaused)
+            let percentage = (time / maxseconds) * 100;
+            let percentages = percentage + "%";
+            headerline.style.width = percentages;
+            time += 0.01; // add 0.01 second
+    
+            if (time >= 2.00) {
+                time = 0;
+                loopvalue += 1;
+                console.log(loopvalue);
+    
+                if (loopvalue >= 8) {
+                    loopvalue = 1;
+                }
+    
+                // remove 'active' from all
+                const sections = [
+                    'mainDashboard', 'scheduleView', 'clubsView',
+                    'psychologistView', 'foodView', 'rulesView', 'eventsView'
+                ];
+                sections.forEach(id => document.getElementById(id).classList.remove('active'));
+    
+                // add 'active' to the right one
+                const activeMap = {
+                    1: 'scheduleView',
+                    2: 'clubsView',
+                    3: 'psychologistView',
+                    4: 'foodView',
+                    5: 'rulesView',
+                    6: 'eventsView',
+                    7: 'mainDashboard'
+                };
+    
+                document.getElementById(activeMap[loopvalue]).classList.add('active');
+                console.log(loopvalue + ' loop worked ');
+            }
+    }, 10); // 10ms = 0.01s
+    }else {
+        clearInterval(timer)
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// Toggle function
+function togglePlayPause() {
+  console.log('isPaused:', isPaused);
+  isPaused = !isPaused;
+  updateButton();
+}
+
+// Add event listener
+button.addEventListener('click', togglePlayPause);
+
+// Initialize
+updateButton();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Initialize
 function init() {
     renderClassSchedule();
@@ -196,9 +336,24 @@ function init() {
     });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Sidebar functions
 function toggleSidebar(open) {
-    if (open === undefined) {
+    if (open) {
         sidebarOpen = !sidebarOpen;
     } else {
         sidebarOpen = open;
@@ -216,7 +371,31 @@ function toggleSidebar(open) {
 }
 
 function switchSection(section) {
+    if ( section === 'schedule'){
+        loopvalue = 1
+        time = 0
+    }else if ( section === 'clubs' ){
+        loopvalue = 2
+        time = 0
+
+    }else if ( section === 'psychologist' ){
+        loopvalue = 3
+        time = 0
+        
+    }else if ( section === 'food' ){
+        loopvalue = 4
+        time = 0
+        
+    }else if ( section === 'rules' ){
+        loopvalue = 5
+        time = 0
+        
+    }else if ( section === 'events' ){
+        loopvalue = 6
+        time = 0
+    }else if ( section === '')
     currentSection = section;
+    
     
     // Hide all sections
     document.querySelectorAll('.section-view').forEach(view => {
@@ -225,6 +404,7 @@ function switchSection(section) {
     
     // Show selected section
     const sectionMap = {
+        'main': 'mainDashboard',
         'schedule': 'scheduleView',
         'clubs': 'clubsView',
         'psychologist': 'psychologistView',
@@ -239,18 +419,37 @@ function switchSection(section) {
     }
     
     // Update nav items
-    navItems.forEach(item => {
-        if (item.getAttribute('data-section') === section) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
+    // navItems.forEach(item => {
+    //     if (item.getAttribute('data-section') === section) {
+    //         item.classList.add('active');
+    //     } else {
+    //         item.classList.remove('active');
+    //     }
+    // });
     
     toggleSidebar(false);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function goHome() {
+    loopedvalue = 7
+    console.log(loopedvalue)
     currentSection = 'main';
     
     // Hide all sections
@@ -274,7 +473,7 @@ function startCarousel() {
     setInterval(() => {
         carouselIndex = (carouselIndex + 1) % 3;
         updateCarousel();
-    }, 5000);
+    }, 10000);
 }
 
 function updateCarousel() {
@@ -297,6 +496,29 @@ function updateCarousel() {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Class Schedule
 function renderClassSchedule() {
@@ -349,6 +571,13 @@ function updateSchedule() {
     `).join('');
 }
 
+
+
+
+
+
+
+
 // Clubs
 function renderClubs() {
     const typeFilter = document.getElementById('typeFilter');
@@ -364,10 +593,30 @@ function renderClubs() {
     updateClubs();
 }
 
+
+
+
+
+
+
+
+
+
 function selectClubType(type) {
     selectedClubType = type;
     renderClubs();
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function updateClubs() {
     const clubsList = document.getElementById('clubsList');
@@ -403,6 +652,18 @@ function updateClubs() {
     `).join('');
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Psychologist
 function renderPsychologistSlots() {
     const slotsContainer = document.getElementById('availableSlots');
@@ -429,6 +690,21 @@ function renderPsychologistSlots() {
         `).join('')}
     `;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Food Menu
 function renderFoodMenu() {
@@ -472,6 +748,20 @@ function renderFoodMenu() {
     `).join('');
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Student Rules
 function renderRules() {
     const rulesGrid = document.getElementById('rulesGrid');
@@ -502,6 +792,19 @@ function renderRules() {
         </div>
     `).join('');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Events & News
 function renderEvents() {
@@ -546,6 +849,20 @@ function renderEvents() {
         </div>
     `).join('');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function updateEventTime() {
     const updateTimeEl = document.getElementById('updateTime');

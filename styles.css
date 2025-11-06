@@ -13,34 +13,19 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(to right, #0891b2, #3b82f6);
-    padding: 2rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-.header-content {
-    max-width: 80rem;
-    margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    background: linear-gradient(to right, #0891b2, #3b82f6);
+    height: 4.815rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
-
-.header-icon {
-    width: 4rem;
-    height: 4rem;
+#header-line {
+    position: relative;
+    height: 0.2rem;
+    top: 48%;
+    background-color: red;
+    width: 0%;
 }
-
-.header-title {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-}
-
-.header-subtitle {
-    font-size: 1.25rem;
-    opacity: 0.9;
-}
-
 /* Main Content */
 .main-content {
     transition: margin-right 0.3s ease;
@@ -51,7 +36,7 @@ body {
 }
 
 .container {
-    max-width: 80rem;
+    max-width: 110rem;
     margin: 0 auto;
     padding: 2rem;
 }
@@ -144,17 +129,17 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
     position: relative;
-    min-height: 300px;
+    min-height: 460px;
 }
 
 .section-title {
-    font-size: 1.875rem;
+    font-size: 2.875rem;
     margin-bottom: 1.5rem;
 }
 
 .carousel-container {
     position: relative;
-    min-height: 200px;
+    min-height: 300px;
 }
 
 .carousel-slide {
@@ -175,8 +160,9 @@ body {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 0.75rem;
-    padding: 2rem;
-    max-width: 48rem;
+    padding: 0.4rem;
+    max-width: 100rem;
+    height: 15rem;
 }
 
 .announcement-content h3 {
@@ -1267,3 +1253,59 @@ body {
         right: 20rem;
     }
 }
+
+
+.button {
+    position: absolute;
+    top: 1.5%;
+    right: 5%;
+    cursor: pointer;
+  }
+  
+  .button-inner {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+  }
+  
+  .button:hover .button-inner {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+  
+  .button:hover .glow {
+    opacity: 1;
+  }
+  
+  /* Play Icon */
+  .play-icon {
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border-left: 15px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+  
+  /* Pause Icon */
+  .pause-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .pause-bar {
+    width: 6px;
+    height: 24px;
+    background: white;
+    border-radius: 2px;
+  }
+  

@@ -8,16 +8,13 @@
 </head>
 <body>
     <!-- Header -->
+    <div id="playPauseBtn" class="button" onclick="toggleTimer()">
+        <div class="button-inner">
+          <div id="buttonIcon"></div>
+        </div>
+    </div>
     <header class="header">
-        <div class="header-content">
-            <svg class="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
-            </svg>
-            <div>
-                <h1 class="header-title">Индра Кибер Сургууль</h1>
-                <p class="header-subtitle">Мэдээллийн Дэлгэц</p>
-            </div>
+        <div id="header-line">
         </div>
     </header>
 
@@ -43,11 +40,6 @@
                         <div class="stat-icon">👥</div>
                         <div class="stat-value">428</div>
                         <div class="stat-label">Идэвхтэй сурагчид</div>
-                    </div>
-                    <div class="stat-card stat-orange">
-                        <div class="stat-icon">🏆</div>
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Энэ сарын арга хэмжээ</div>
                     </div>
                     <div class="stat-card stat-green">
                         <div class="stat-icon">📈</div>
