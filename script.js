@@ -1,3 +1,5 @@
+// console.log(analytics)
+
 // State
 let currentSection = 'main';
 let sidebarOpen = false;
@@ -183,7 +185,7 @@ const headerline = document.getElementById("header-line")
 
 let time = 0;
 let loopvalue = 0;
-let maxseconds = 2;
+let maxseconds = 20;
 let timer = null; // store interval ID
 let isRunning = false; // track state
 
@@ -222,16 +224,14 @@ function updateButton() {
 function toggleTimer(){
     if ( isPaused === true ) {
         timer = setInterval(() => {
-            console.log(isPaused)
             let percentage = (time / maxseconds) * 100;
             let percentages = percentage + "%";
             headerline.style.width = percentages;
             time += 0.01; // add 0.01 second
     
-            if (time >= 2.00) {
+            if (time >= 20.00) {
                 time = 0;
                 loopvalue += 1;
-                console.log(loopvalue);
     
                 if (loopvalue >= 8) {
                     loopvalue = 1;
@@ -240,7 +240,7 @@ function toggleTimer(){
                 // remove 'active' from all
                 const sections = [
                     'mainDashboard', 'scheduleView', 'clubsView',
-                    'psychologistView', 'foodView', 'rulesView', 'eventsView'
+                    'psychologistView', 'foodView', 'rulesView', 'eventsView', 'teacherView'
                 ];
                 sections.forEach(id => document.getElementById(id).classList.remove('active'));
     
@@ -252,11 +252,11 @@ function toggleTimer(){
                     4: 'foodView',
                     5: 'rulesView',
                     6: 'eventsView',
-                    7: 'mainDashboard'
+                    7: 'mainDashboard',
+                    8: 'TeacherView'
                 };
     
                 document.getElementById(activeMap[loopvalue]).classList.add('active');
-                console.log(loopvalue + ' loop worked ');
             }
     }, 10); // 10ms = 0.01s
     }else {
@@ -278,7 +278,6 @@ function toggleTimer(){
 
 // Toggle function
 function togglePlayPause() {
-  console.log('isPaused:', isPaused);
   isPaused = !isPaused;
   updateButton();
 }
@@ -320,9 +319,11 @@ function init() {
     renderFoodMenu();
     renderRules();
     renderEvents();
+    renderTeachers();
     startCarousel();
     updateEventTime();
-    
+
+
     // Event listeners
     sidebarToggle.addEventListener('click', toggleSidebar);
     closeSidebar.addEventListener('click', () => toggleSidebar(false));
@@ -373,26 +374,18 @@ function toggleSidebar(open) {
 function switchSection(section) {
     if ( section === 'schedule'){
         loopvalue = 1
-        time = 0
-    }else if ( section === 'clubs' ){
+}else if ( section === 'clubs' ){
         loopvalue = 2
-        time = 0
-
     }else if ( section === 'psychologist' ){
         loopvalue = 3
-        time = 0
-        
     }else if ( section === 'food' ){
         loopvalue = 4
-        time = 0
         
     }else if ( section === 'rules' ){
         loopvalue = 5
-        time = 0
         
     }else if ( section === 'events' ){
         loopvalue = 6
-        time = 0
     }else if ( section === '')
     currentSection = section;
     
@@ -410,22 +403,17 @@ function switchSection(section) {
         'psychologist': 'psychologistView',
         'food': 'foodView',
         'rules': 'rulesView',
-        'events': 'eventsView'
+        'events': 'eventsView',
+        'teachers': 'teacherView'
     };
     
     const viewId = sectionMap[section];
-    if (viewId) {
+    console.log(section)
+    console.log(viewId)
+    if (viewId) {   
         document.getElementById(viewId).classList.add('active');
     }
-    
-    // Update nav items
-    // navItems.forEach(item => {
-    //     if (item.getAttribute('data-section') === section) {
-    //         item.classList.add('active');
-    //     } else {
-    //         item.classList.remove('active');
-    //     }
-    // });
+
     
     toggleSidebar(false);
 }
@@ -572,6 +560,14 @@ function updateSchedule() {
 }
 
 
+function renderTeachers() {
+    const typeFilter = document.getElementById('typeFilter');
+    
+    // typeFilter.innerHTML = join('');
+    
+    updateTeacher();
+}   
+
 
 
 
@@ -592,8 +588,6 @@ function renderClubs() {
     
     updateClubs();
 }
-
-
 
 
 
@@ -650,6 +644,11 @@ function updateClubs() {
             </div>
         </div>
     `).join('');
+}
+
+function updateTeacher() {
+    
+    // join('');
 }
 
 
@@ -722,26 +721,12 @@ function renderFoodMenu() {
                 </div>
             </div>
             <div class="meals-grid">
-                <div class="meal-item breakfast">
-                    <div class="meal-header">
-                        <span>🌅</span>
-                        <h4>Өглөө</h4>
-                    </div>
-                    <p class="meal-description">${menu.breakfast}</p>
-                </div>
                 <div class="meal-item lunch">
                     <div class="meal-header">
                         <span>☀️</span>
                         <h4>Өдөр</h4>
                     </div>
                     <p class="meal-description">${menu.lunch}</p>
-                </div>
-                <div class="meal-item dinner">
-                    <div class="meal-header">
-                        <span>🌙</span>
-                        <h4>Үдэш</h4>
-                    </div>
-                    <p class="meal-description">${menu.dinner}</p>
                 </div>
             </div>
         </div>
