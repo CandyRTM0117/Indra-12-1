@@ -1416,7 +1416,7 @@ body {
     font-size: 20px;
 }
 .namechoose {
-    gap: 28%;
+    gap: 5px;
     min-width: 10rem;
     width: 80%;
     justify-content: center;

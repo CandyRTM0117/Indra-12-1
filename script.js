@@ -904,6 +904,7 @@ isPaused = false
             userView.classList.add('active')
         }
     }
+    toggleSidebar(false)
 })
 
 
