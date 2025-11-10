@@ -187,14 +187,15 @@ let time = 0;
 let loopvalue = 0;
 let maxseconds = 20;
 let timer = null; // store interval ID
+
+
+
+
 let isRunning = false; // track state
 
 
 
-
-
-
-let isPaused = true;
+let isPaused = false;
 
 // Get elements
 const button = document.getElementById('playPauseBtn');
@@ -202,7 +203,7 @@ const icon = document.getElementById('buttonIcon');
 
 // Function to update button icon
 function updateButton() {
-  if (isPaused) {
+  if (!isPaused) {
     // Show Play icon
     icon.innerHTML = '<div class="play-icon"></div>';
   } else {
@@ -221,8 +222,11 @@ function updateButton() {
 
 
 
-function toggleTimer(){
-    if ( isPaused === true ) {
+function toggleTimer(num){
+    if(num){
+        clearInterval(timer)
+    }else{
+    if ( isPaused === false ) {
         timer = setInterval(() => {
             let percentage = (time / maxseconds) * 100;
             let percentages = percentage + "%";
@@ -253,7 +257,7 @@ function toggleTimer(){
                     5: 'rulesView',
                     6: 'eventsView',
                     7: 'mainDashboard',
-                    8: 'TeacherView'
+                    8: 'teacherView'
                 };
     
                 document.getElementById(activeMap[loopvalue]).classList.add('active');
@@ -262,7 +266,7 @@ function toggleTimer(){
     }else {
         clearInterval(timer)
     }
-
+    }
 }
 
 
@@ -408,8 +412,8 @@ function switchSection(section) {
     };
     
     const viewId = sectionMap[section];
-    console.log(section)
-    console.log(viewId)
+    // console.log(section)
+    // console.log(viewId)
     if (viewId) {   
         document.getElementById(viewId).classList.add('active');
     }
@@ -872,3 +876,83 @@ function updateEventTime() {
 
 // Start the application
 init();
+
+
+const login = document.getElementById("loginuser")
+const userView = document.getElementById('userView')
+
+
+login.addEventListener('click', ()=> {
+isPaused = false
+   toggleTimer(true)
+   updateButton(true)
+   const Map = {
+    1: 'scheduleView',
+    2: 'clubsView',
+    3: 'psychologistView',
+    4: 'foodView',
+    5: 'rulesView',
+    6: 'eventsView',
+    7: 'mainDashboard',
+    8: 'teacherView'
+    };
+    
+    for(i = 1; i <= 8 ; i++){
+        a = document.getElementById(Map[i]).classList
+        if(a.length == 2){
+            a.remove('active')
+            userView.classList.add('active')
+        }
+    }
+})
+
+
+const parent = document.getElementById('parent')
+let parentactive = false
+let teacheractive = false
+const teacher = document.getElementById('teacher')
+const loginbar = document.getElementById('loginbar')
+parent.addEventListener('click', ()=>{
+    parentactive = true
+    teacheractive = false
+    chooseactive()
+    console.log('parent')
+    
+})
+teacher.addEventListener('click', ()=>{
+    parentactive = false
+    teacheractive = true
+    chooseactive()
+    console.log('teacher')
+})
+
+function chooseactive () {
+    if(parentactive){
+        parent.style.color = '#06b6d4'
+        parent.style.fontSize = '21px' 
+    }else{
+        parent.style.color = '#fff'
+        parent.style.fontSize = '20px' 
+    }
+    if(teacheractive){
+        teacher.style.color = '#06b6d4'
+        teacher.style.fontSize = '21px' 
+    }else{
+        teacher.style.color = '#fff'
+        teacher.style.fontSize = '20px' 
+    }
+}
+const usernamechoosed = document.getElementById('username')
+const emailchoosed = document.getElementById('email')
+const inputbar = document.getElementById('loginbar')
+
+
+function updateinput(input){
+    if(input === `username`){
+        inputbar.placeholder = 'Нэвтрэх нэр'
+        inputbar.type = 'text'
+    }else if(input === `email`){
+        inputbar.placeholder = 'example@outlook.com'
+        inputbar.type = 'email'
+    }
+}

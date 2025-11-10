@@ -256,7 +256,7 @@ body {
 }
 
 .page-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 0.25rem;
 }
 
@@ -1308,4 +1308,139 @@ body {
     background: white;
     border-radius: 2px;
   }
-  
+
+  .login-user {
+    margin: 2rem 1.5rem;
+    width: calc(100% - 3rem);
+    padding: 1rem;
+    background: linear-gradient(to  right, #07242b, #001027);
+    border: 0.01rem solid white;
+    color: white;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+    justify-content: center;
+}
+
+.login-user:hover {
+    background: linear-gradient(to right, #084455, #081e4d);
+    font-size: 15px;
+}
+.logingrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid;
+    gap: 5px;
+    text-align: center;
+}
+.parent {
+    font-size: 20px;
+    transition: all 0.5s ease;
+
+}
+.teacher {
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+.parent:hover {
+    font-size: 21px;
+    color:#06b6d4;
+    cursor: default;
+}
+.teacher:hover {
+    font-size: 21px;
+    color:#06b6d4;
+    cursor: default;;
+}
+.loginchoose {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 20px;
+}
+.choosing {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.parent:focus {
+    font-size: 21px;
+    color:#06b6d4;
+}
+.teacher:focus {
+    font-size: 21px;
+    color:#06b6d4;
+}
+.loginbar {
+    align-self: center;
+    width: 80%;
+    max-width: 25rem;
+    background: rgba(212, 212, 212, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.75rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    gap: 5px;
+    font-size: 15px;
+    color: white;
+}
+.loginbar:focus {
+    outline: none;
+}
+.loginbar::placeholder {
+    color: white;
+}
+.inputclass {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    gap: 1rem;
+    font-size: 20px;
+}
+.namechoose {
+    gap: 28%;
+    min-width: 10rem;
+    width: 80%;
+    justify-content: center;
+    display: flex;
+    align-self: center;
+    flex-direction: row;
+}
+.submit {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    align-self: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-right: 3rem;
+    padding-left: 3rem;
+    background: rgba(212, 212, 212, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.75rem;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
+    cursor: default
+}
+.submit:hover {
+    background-color: #2441cf;
+    font-size: 1.7rem;
+    cursor: default
+}

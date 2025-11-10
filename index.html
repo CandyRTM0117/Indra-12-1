@@ -22,7 +22,7 @@
     <main id="mainContent" class="main-content">
         <div class="container">
             <!-- Main Dashboard (default view) -->
-            <div id="mainDashboard" class="section-view active">
+            <div id="mainDashboard" class="section-view">
                 <!-- Welcome Section -->
                 <div class="welcome-card">
                     <h1 class="welcome-title">Сайн байна уу!</h1>
@@ -328,6 +328,32 @@
 
                 <div id="clubsList" class="clubs-grid"></div>
             </div>
+            <div id="userView" class="section-view active">
+                <div class="logingrid">
+                    <div class="login">
+                        <div id="loginchoose" class="loginchoose">
+                            Нэвтрэх 
+                            <div class="choosing">
+                                <div id="parent" class="parent">Эцэг эх</div> | 
+                                <div id="teacher" class="teacher">Багш</div>
+                            </div>
+                        </div>
+                        <div class="inputclass">
+                            <div class="namechoose">
+                                <div id="username" onclick="updateinput(`username`)">
+                                    Нэвтрэх нэр
+                                </div>
+                                <div id="email" onclick="updateinput(`email`)">
+                                    Email
+                                </div>
+                            </div>
+                            <input placeholder="Нэвтрэх нэр" id="loginbar" class="loginbar" type="text">
+                            <input placeholder="Нэвтрэх нууц үг" id="passwordbar" class="loginbar" type="text">
+                            <div id="submit" class="submit">Нэвтрэх</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -395,6 +421,9 @@
         </nav>
 
         <button id="homeBtn" class="home-btn">Нүүр хуудас руу буцах</button>
+        <div id="user" class="userinterface">
+            <div id="loginuser" class="login-user">Нэвтрэх / Бүртгүүлэх</div>
+        </div>
     </aside>
 
     <script src="script.js"></script>
