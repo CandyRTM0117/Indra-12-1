@@ -22,7 +22,7 @@
     <main id="mainContent" class="main-content">
         <div class="container">
             <!-- Main Dashboard (default view) -->
-            <div id="mainDashboard" class="section-view">
+            <div id="mainDashboard" class="section-view active">
                 <!-- Welcome Section -->
                 <div class="welcome-card">
                     <h1 class="welcome-title">Сайн байна уу!</h1>
@@ -105,7 +105,23 @@
                     <div class="class-filter" id="classFilter"></div>
                 </div>
 
-                <div id="scheduleList" class="schedule-list"></div>
+                <div id="scheduleList">
+                    <div class="schedule-content">
+                        <!-- Week Days Navigation -->
+                        <div class="weekdays" id="weekDays">
+                            <button id="Monday" onclick="updateSchedule('Monday','0')" class="day-btn active" data-day="0">Даваа</button>
+                            <button id="Tuesday" onclick="updateSchedule('Tuesday','1')" class="day-btn" data-day="1">Мягмар</button>
+                            <button id="Wednesday" onclick="updateSchedule('Wednesday','2')" class="day-btn" data-day="2">Лхагва</button>
+                            <button id="Thursday" onclick="updateSchedule('Thursday','3')" class="day-btn" data-day="3">Пүрэв</button>
+                            <button id="Friday" onclick="updateSchedule('Friday','4')" class="day-btn" data-day="4">Баасан</button>
+                        </div>
+            
+                        <!-- Schedule List -->
+                        <div class="schedule-list" id="scheduleLists">
+                            <!-- Schedule items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Clubs View -->
@@ -328,11 +344,10 @@
 
                 <div id="clubsList" class="clubs-grid"></div>
             </div>
-            <div id="userView" class="section-view active">
+            <div id="userView" class="section-view">
                 <div class="logingrid">
                     <div class="login">
                         <div id="loginchoose" class="loginchoose">
-                            Нэвтрэх 
                             <div class="choosing">
                                 <div id="parent" class="parent">Эцэг эх</div> | 
                                 <div id="teacher" class="teacher">Багш</div>
@@ -429,6 +444,9 @@
         <button id="homeBtn" class="home-btn">Нүүр хуудас руу буцах</button>
         <div id="user" class="userinterface">
             <div id="loginuser" class="login-user">Нэвтрэх / Бүртгүүлэх</div>
+        </div>
+        <div id="user" class="userinterface">
+            <div id="loginuser" class="login-user">Хичээлийн дүн</div>
         </div>
     </aside>
 

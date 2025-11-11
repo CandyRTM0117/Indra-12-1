@@ -353,13 +353,6 @@ body {
     background: rgba(255, 255, 255, 0.15);
 }
 
-.schedule-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr 2fr 1fr;
-    gap: 1rem;
-    align-items: center;
-}
-
 .schedule-time {
     display: flex;
     align-items: center;
@@ -1226,7 +1219,7 @@ body {
     }
 
     .class-filter {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .slots-grid {
@@ -1337,6 +1330,8 @@ body {
     margin-bottom: 1.5rem;
 }
 .login {
+    background: linear-gradient(-45deg, #1e3a8a 0%, #3730a3 40%, #581c87 100%);
+    backdrop-filter: blur(10px);
     min-width: 50%;
     display: flex;
     justify-self: center;
@@ -1349,6 +1344,8 @@ body {
     border: 1px solid;
     gap: 5px;
     text-align: center;
+    box-shadow: 0px 0px 10px rgb(255, 255, 255);
+
 }
 .parent {
     font-size: 20px;
@@ -1409,6 +1406,7 @@ body {
     color: white;
 }
 .loginbar:focus {
+    box-shadow: 0px 0px 5px rgb(255, 255, 255);
     outline: none;
 }
 .loginbar::placeholder {
@@ -1464,4 +1462,167 @@ body {
 }
 .column {
     display: block;
+}
+
+/* Schedule Content */
+.schedule-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+/* Week Days */
+.weekdays {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.weekdays::-webkit-scrollbar {
+    height: 4px;
+}
+
+.weekdays::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.weekdays::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+.day-btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.day-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.day-btn.active {
+    background: #22d3ee;
+    color: #1e3a8a;
+}
+
+/* Schedule List */
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.schedule-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: all 0.3s ease;
+}
+
+.schedule-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.time-badge {
+    background: #22d3ee;
+    color: #1e3a8a;
+    padding: 8px 12px;
+    border-radius: 12px;
+    min-width: 100px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.subject-info {
+    flex: 1;
+}
+
+.subject-info h3 {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.subject-info p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.period-badge {
+    background: rgba(34, 211, 238, 0.2);
+    color: #22d3ee;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Back Button */
+.back-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.back-btn svg {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .schedule-content {
+        padding: 16px;
+    }
+
+    .schedule-item {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+@media (max-width: 450px) {
+    .class-filter {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

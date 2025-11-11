@@ -1,9 +1,10 @@
+let prevnum = []
 // console.log(analytics)
 
 // State
 let currentSection = 'main';
 let sidebarOpen = false;
-let selectedClass = '10А';
+let selectedClass = '12А';
 let selectedClubType = 'Бүгд';
 let carouselIndex = 0;
 
@@ -46,22 +47,70 @@ const teacherData = [
 ]
 
 const scheduleData = {
-    '10А': [
-        { time: '08:00 - 08:45', subject: 'Математик', teacher: 'Б.Болормаа', room: '201' },
-        { time: '09:00 - 09:45', subject: 'Физик', teacher: 'Ж.Жавхлан', room: '305' },
-        { time: '10:00 - 10:45', subject: 'Программчлал', teacher: 'Д.Дорж', room: 'Lab-1' },
-        { time: '11:00 - 11:45', subject: 'Англи хэл', teacher: 'С.Сарнай', room: '102' },
-        { time: '13:00 - 13:45', subject: 'Хими', teacher: 'Н.Нарантуяа', room: '308' },
-        { time: '14:00 - 14:45', subject: 'Биологи', teacher: 'О.Оюунцэцэг', room: '210' },
-    ],
-    '11А': [
-        { time: '08:00 - 08:45', subject: 'Кибер аюулгүй байдал', teacher: 'Д.Дорж', room: 'Lab-2' },
-        { time: '09:00 - 09:45', subject: 'Математик', teacher: 'Б.Болормаа', room: '201' },
-        { time: '10:00 - 10:45', subject: 'AI & Machine Learning', teacher: 'Г.Ганбаатар', room: 'Lab-1' },
-        { time: '11:00 - 11:45', subject: 'Англи хэл', teacher: 'С.Сарнай', room: '102' },
-        { time: '13:00 - 13:45', subject: 'Вэб дизайн', teacher: 'Ц.Цэцэг', room: 'Lab-3' },
-        { time: '14:00 - 14:45', subject: 'Физик', teacher: 'Ж.Жавхлан', room: '305' },
-    ]
+    '12А': {
+        Monday : {
+            1: 'Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Tuesday : {
+            1: '2-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Wednesday : {
+            
+            1: '3-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Thursday : {
+            
+            1: '4-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Friday : {
+            1: '5-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        }
+    }
 };
 
 const clubTypes = ['Бүгд', 'Спорт', 'Урлаг', 'Технологи', 'Шинжлэх ухаан'];
@@ -568,36 +617,6 @@ function selectClass(cls) {
     renderClassSchedule();
 }
 
-function updateSchedule() {
-    const scheduleList = document.getElementById('scheduleList');
-    const schedule = scheduleData[selectedClass] || scheduleData['10А'];
-    
-    scheduleList.innerHTML = schedule.map(item => `
-        <div class="schedule-item">
-            <div class="schedule-content">
-                <div class="schedule-time">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>${item.time}</span>
-                </div>
-                <div class="schedule-subject">
-                    <h3>${item.subject}</h3>
-                </div>
-                <div class="schedule-teacher">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                    </svg>
-                    <span>${item.teacher}</span>
-                </div>
-                <div class="schedule-room">
-                    <span>Өрөө: ${item.room}</span>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
 
 function renderTeachers() {
     const typeFilter = document.getElementById('typeFilter');
@@ -987,6 +1006,8 @@ const inputbar = document.getElementById('loginbar')
 const passbar = document.getElementById('passwordbar')
 const usernameselect = document.getElementById('username')
 const teacherselect = document.getElementById('email')
+const wrongtext = document.getElementById('wrongunpw')
+const loginsuccess = false
 // passbar.style.opacity = '0'
 
 function updateinput(input){
@@ -1010,10 +1031,19 @@ function updateinput(input){
         usernameselect.style.fontSize = '20px'
     }
 }
-console.log(userData)
-console.log(teacherData)
+// console.log(userData)
+// console.log(teacherData)
 
 const submit = document.getElementById('submit')
+let ispass = false
+passbar.addEventListener('keydown', ()=>{
+    if ( passbar.value !== ''){
+
+        ispass = true
+    }else {
+        ispass = false
+}
+})
 
 submit.addEventListener('click', ()=>{
     matchedvalueun = 0
@@ -1025,22 +1055,103 @@ submit.addEventListener('click', ()=>{
             if(loginbar.value == userData[i].username && matchedvalueun == 0){
                 matchedun = userData[i].username;
                 matchedvalueun = 1
-                passbar.style.opacity = '1'
             }else if( matchedvalueun == 0){
                 matchedun = null
             }
         }
     }
-    if( inputtypeusername ){
+    if( !inputtypeusername ){
         for ( i = 0 ; i < userData.length ; i++ ){
-            if(loginbar.value == userData[i].username && matchedvalueun == 0){
-                matchedun = userData[i].username;
+            if(loginbar.value == userData[i].mail && matchedvalueun == 0){
+                matchedun = userData[i].mail;
                 matchedvalueun = 1
             }else if( matchedvalueun == 0){
                 matchedun = null
             }
         }
     }
-    console.log(matchedun + " matched un")
-    console.log(matchedpw) + " matched pw"
+    if( ispass ){
+        for ( i = 0 ; i < userData.length ; i++ ){
+            if(passbar.value == userData[i].password && matchedvaluepw == 0){
+                matchedpw = userData[i].password;
+                matchedvaluepw = 1
+            }else if( matchedvalueun == 0){
+                matchedpw = null
+            }
+        }
+    }
+
+
+    if(matchedun == null && matchedpw == null){
+        wrongtext.style.opacity = '1'
+    }
+    if(matchedpw && matchedun){
+        console.log('login success')
+        userView.classList.remove('active')
+        document.getElementById('mainDashboard').classList.add('active')
+        loginsuccess = true
+    }else{
+        console.log('login failed')
+        loginsuccess = false
+    }
 })
+
+
+function updateSchedule(day, num) {
+    prevnum.push(num)
+    if(prevnum.length == 3){
+        prevnum.shift()
+    }
+    let activeadd = {
+        0: 'Monday',
+        1: 'Tuesday',
+        2: 'Wednesday',
+        3: 'Thursday',
+        4: 'Friday',
+    }
+    console.log(prevnum)
+    let prevday = activeadd[prevnum[0]]
+    let curday = activeadd[prevnum[1]]
+    console.log(prevday,curday)
+    if(!prevday && curday){
+        document.getElementById('Monday').classList.remove('active')
+        document.getElementById(curday).classList.add('active')
+    }else if(prevday && curday){
+        document.getElementById(prevday).classList.remove('active')
+        document.getElementById(curday).classList.add('active')
+
+    }
+    let days = day || 'Monday'
+    const scheduleLists = document.getElementById('scheduleLists');
+    const schedule = scheduleData[selectedClass];
+    const scheduleday = schedule[days]
+
+    scheduleLists.innerHTML = ''
+
+    const times = {
+        1: '08:00-08:40',
+        2: '08:45-09:25',
+        3: '09:40-10:20',
+        4: '10:25-11:05',
+        5: '11:10-11:50',
+        6: '11:50-12:30',
+        7: '13:20-14:00',
+        8: '14:05-14:45',
+        9: '14:50-15:30',
+        10: '15:35-16:15'
+      };
+    for( i = 1; i <= 10; i++){
+        if (!scheduleday[i]) continue;
+
+        // Create an HTML block for each time slot
+        scheduleLists.innerHTML += `
+            <div class="schedule-item">
+            <div class="time-badge">${times[i]}</div>
+            <div class="subject-info">
+                <h3 id="subject-text">${scheduleday[i]}</h3>
+            </div>
+            <div class="period-badge">${i}-р цаг</div>
+        </div>
+        `
+    }
+}
