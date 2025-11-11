@@ -10,6 +10,41 @@ let carouselIndex = 0;
 // Data
 const classes = ['8А', '8Б', '9А', '9Б', '10А', '10Б', '11А', '11Б', '12А', '12Б'];
 
+const userData = [
+        {
+            mail : 'luvsandamba@gmail.com',
+            username : 'luvsandamba1',
+            password:  'candy2323'
+        },
+        {
+            mail : 'luvsandamba2@gmail.com',
+            username : 'luvsandamba2',
+            password:  'candy2323'
+        },
+        {
+            mail : 'luvsandamba3@gmail.com',
+            username : 'luvsandamba3',
+            password:  'candy2323'
+        }
+]
+const teacherData = [
+        {   
+            mail : 'jargal123@gmail.com',
+            username : 'jargal123',
+            password : 'passjargal'
+        },
+        {   
+            mail : 'jargal124@gmail.com',
+            username : 'jargal124',
+            password : 'passjargal'
+        },
+        {   
+            mail : 'jargal125@gmail.com',
+            username : 'jargal125',
+            password : 'passjargal'
+        }
+]
+
 const scheduleData = {
     '10А': [
         { time: '08:00 - 08:45', subject: 'Математик', teacher: 'Б.Болормаа', room: '201' },
@@ -943,17 +978,69 @@ function chooseactive () {
         teacher.style.fontSize = '20px' 
     }
 }
+
+let inputtypeusername =  true
+
 const usernamechoosed = document.getElementById('username')
 const emailchoosed = document.getElementById('email')
 const inputbar = document.getElementById('loginbar')
-
+const passbar = document.getElementById('passwordbar')
+const usernameselect = document.getElementById('username')
+const teacherselect = document.getElementById('email')
+// passbar.style.opacity = '0'
 
 function updateinput(input){
     if(input === `username`){
+        inputtypeusername = true
         inputbar.placeholder = 'Нэвтрэх нэр'
         inputbar.type = 'text'
+        inputbar.value = ''
+        usernameselect.style.color = '#06b6d4'
+        usernameselect.style.fontSize = '21px'
+        teacherselect.style.color = '#fff'
+        teacherselect.style.fontSize = '20px'
     }else if(input === `email`){
+        inputtypeusername = false
         inputbar.placeholder = 'example@outlook.com'
         inputbar.type = 'email'
+        inputbar.value = ''
+        teacherselect.style.color = '#06b6d4'
+        teacherselect.style.fontSize = '21px'
+        usernameselect.style.color = '#fff'
+        usernameselect.style.fontSize = '20px'
     }
 }
+console.log(userData)
+console.log(teacherData)
+
+const submit = document.getElementById('submit')
+
+submit.addEventListener('click', ()=>{
+    matchedvalueun = 0
+    matchedvaluepw = 0
+    let matchedun
+    let matchedpw
+    if( inputtypeusername ){
+        for ( i = 0 ; i < userData.length ; i++ ){
+            if(loginbar.value == userData[i].username && matchedvalueun == 0){
+                matchedun = userData[i].username;
+                matchedvalueun = 1
+                passbar.style.opacity = '1'
+            }else if( matchedvalueun == 0){
+                matchedun = null
+            }
+        }
+    }
+    if( inputtypeusername ){
+        for ( i = 0 ; i < userData.length ; i++ ){
+            if(loginbar.value == userData[i].username && matchedvalueun == 0){
+                matchedun = userData[i].username;
+                matchedvalueun = 1
+            }else if( matchedvalueun == 0){
+                matchedun = null
+            }
+        }
+    }
+    console.log(matchedun + " matched un")
+    console.log(matchedpw) + " matched pw"
+})

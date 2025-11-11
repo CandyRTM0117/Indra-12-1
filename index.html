@@ -22,7 +22,7 @@
     <main id="mainContent" class="main-content">
         <div class="container">
             <!-- Main Dashboard (default view) -->
-            <div id="mainDashboard" class="section-view active">
+            <div id="mainDashboard" class="section-view">
                 <!-- Welcome Section -->
                 <div class="welcome-card">
                     <h1 class="welcome-title">Сайн байна уу!</h1>
@@ -328,7 +328,7 @@
 
                 <div id="clubsList" class="clubs-grid"></div>
             </div>
-            <div id="userView" class="section-view">
+            <div id="userView" class="section-view active">
                 <div class="logingrid">
                     <div class="login">
                         <div id="loginchoose" class="loginchoose">
@@ -348,8 +348,13 @@
                                     Email
                                 </div>
                             </div>
-                            <input placeholder="Нэвтрэх нэр" id="loginbar" class="loginbar" type="text">
-                            <input placeholder="Нэвтрэх нууц үг" id="passwordbar" class="loginbar" type="text">
+                            <div class="inputcenter">
+                                <div id="wrongunpw" class="wrong">Хэрэглэгчийн нэр эсвэл нууц үг буруу байна.</div>
+                                <div class="column">
+                                    <input placeholder="Нэвтрэх нэр" id="loginbar" class="loginbar" type="text">
+                                    <input placeholder="Нэвтрэх нууц үг" id="passwordbar" class="loginbar" type="password">
+                                </div>
+                            </div>
                             <div id="submit" class="submit">Нэвтрэх</div>
                         </div>
                     </div>

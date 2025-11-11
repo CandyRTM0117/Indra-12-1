@@ -1330,16 +1330,21 @@ body {
     font-size: 15px;
 }
 .logingrid {
+    margin-top: 5rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
 .login {
+    min-width: 50%;
     display: flex;
+    justify-self: center;
     flex-direction: column;
     border-radius: 0.75rem;
     padding: 1rem;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
     text-align: center;
     border: 1px solid;
     gap: 5px;
@@ -1369,13 +1374,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 15px;
     font-size: 20px;
 }
 .choosing {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 15px;
 }
 .parent:focus {
     font-size: 21px;
@@ -1386,6 +1391,7 @@ body {
     color:#06b6d4;
 }
 .loginbar {
+    margin-bottom: 1rem;
     align-self: center;
     width: 80%;
     max-width: 25rem;
@@ -1416,7 +1422,7 @@ body {
     font-size: 20px;
 }
 .namechoose {
-    gap: 5px;
+    gap: 15px;
     min-width: 10rem;
     width: 80%;
     justify-content: center;
@@ -1443,4 +1449,19 @@ body {
     background-color: #2441cf;
     font-size: 1.7rem;
     cursor: default
+}
+.wrong {
+    opacity: 0;
+    font-weight: 600;
+    color: #ff0000;
+    font-size: 70%;
+}
+.inputcenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.column {
+    display: block;
 }
