@@ -17,9 +17,211 @@
         <div id="header-line">
         </div>
     </header>
+    
+<div id="adminpanel" class="admin-panel">
+        <div>
+            <div class="admintext">
+                Admin
+            </div>
+            <div class="chooses">
+                <div class="individualchoose">
+                    Schedule
+                </div>
+                <div class="individualchoose">
+                    Clubs
+                </div>
+                <div class="individualchoose">
+                    Teacher
+                </div>
+                <div class="individualchoose">
+                    Events
+                </div>
+            </div>
+
+
+            <div id="scheduleadmin" class="adminsection adminactive">
+                <!-- Small input above -->
+                <input type="text" id="smallInput" placeholder="Enter title" class="styled-input">
+                
+                <!-- Dropdown to choose days -->
+                <label for="daySelect" class="styled-label">Choose a day:</label>
+                <select id="daySelect" class="styled-select">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                </select>
+                
+                <!-- 10 inputs below -->
+                <div id="inputsContainer" class="inputs-container">
+                    <label class="styled-label">Class Schedule:</label>
+                    <div>
+                        <input type="text" placeholder="1-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="2-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="3-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="4-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="5-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="6-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="7-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="8-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="9-р цаг" class="styled-input">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="10-р цаг" class="styled-input">
+                    </div>
+                </div>
+                
+                <!-- Buttons for adding, removing, and editing schedules -->
+                <div class="button-container">
+                    <!-- Add/Edit/Remove Inputs and Buttons -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" id="scheduleInput" placeholder="Enter schedule title" class="styled-input" style="flex: 1; min-width: 200px;">
+                        <button id="addScheduleButton" class="styled-button">Add</button>
+                        <button id="editScheduleButton" class="styled-button">Edit</button>
+                        <button id="removeScheduleButton" class="styled-button">Remove</button>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div id="clubadmin" class="adminsection">
+                <!-- Club Admin Section -->
+                <h2 class="admin-title">Club Management</h2>
+                
+                <!-- Extra Input Above Club Information -->
+                <input type="text" id="clubExtraInput" placeholder="Extra Input (e.g., Club Name)" class="styled-input" style="margin-bottom: 10px;">
+            
+                <!-- Input Fields for Club Information -->
+                <div class="club-inputs">
+                    <input type="text" id="clubWhen" placeholder="When (e.g., Monday 3 PM)" class="styled-input">
+                    <input type="text" id="clubTeacher" placeholder="Teacher Name" class="styled-input">
+                    <input type="text" id="clubLab" placeholder="Lab (e.g., Lab 1)" class="styled-input">
+                    <input type="text" id="clubDuration" placeholder="Lecture Duration (e.g., 1 hour)" class="styled-input">
+                    <input type="text" id="clubPurpose" placeholder="Purpose" class="styled-input">
+                    <input type="text" id="clubTarget" placeholder="Target Audience" class="styled-input">
+                </div>
+                
+                <!-- Buttons for Adding, Editing, and Removing Clubs -->
+                <div class="button-container">
+                    <button id="addClubButton" class="styled-button">Add Club</button>
+                    
+                    <!-- Edit Button with Input -->
+                    <div style="display: inline-flex; align-items: center;">
+                        <button id="editClubButton" class="styled-button">Edit Club</button>
+                        <input type="text" id="editClubInput" placeholder="Club to Edit" class="styled-input" style="margin-left: 10px; width: 150px;">
+                    </div>
+                    
+                    <!-- Remove Button with Input -->
+                    <div style="display: inline-flex; align-items: center; margin-top: 10px;">
+                        <button id="removeClubButton" class="styled-button">Remove Club</button>
+                        <input type="text" id="removeClubInput" placeholder="Club to Remove" class="styled-input" style="margin-left: 10px; width: 150px;">
+                    </div>
+                </div>
+                
+                <!-- Display Container for Club Data -->
+                <div id="clubListContainer" class="club-list-container">
+                    <h3 class="list-title">Clubs</h3>
+                    <ul id="clubList" class="club-list">
+                        <!-- Dynamic list of clubs will be added here -->
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="teacheradmin" class="adminsection">
+                <h2 class="admin-title">Teacher Management</h2>
+                
+                <!-- Input Fields for Teacher Information -->
+                <div class="teacher-inputs">
+                    <input type="text" id="teacherSubject" placeholder="Subject" class="styled-input">
+                    <input type="text" id="teacherName" placeholder="Teacher Name" class="styled-input">
+                    <input type="text" id="teacherImageUrl" placeholder="Image URL" class="styled-input">
+                    <input type="text" id="teacherAdditionalInput" placeholder="Additional Info" class="styled-input">
+                </div>
+                
+                <!-- Buttons for Adding, Editing, and Removing Teachers -->
+                <div class="button-container">
+                    <button id="addTeacherButton" class="styled-button">Add Teacher</button>
+                    
+                    <!-- Edit Button with Input -->
+                    <div style="display: inline-flex; align-items: center;">
+                        <button id="editTeacherButton" class="styled-button">Edit Teacher</button>
+                        <input type="text" id="editTeacherInput" placeholder="Teacher to Edit" class="styled-input" style="margin-left: 10px; width: 150px;">
+                    </div>
+                    
+                    <!-- Remove Button with Input -->
+                    <div style="display: inline-flex; align-items: center; margin-top: 10px;">
+                        <button id="removeTeacherButton" class="styled-button">Remove Teacher</button>
+                        <input type="text" id="removeTeacherInput" placeholder="Teacher to Remove" class="styled-input" style="margin-left: 10px; width: 150px;">
+                    </div>
+                </div>
+                
+                <!-- Display Container for Teacher Data -->
+                <div id="teacherListContainer" class="teacher-list-container">
+                    <h3 class="list-title">Teachers</h3>
+                    <ul id="teacherList" class="teacher-list">
+                        <!-- Dynamic list of teachers will be added here -->
+                    </ul>
+                </div>
+            </div>
+
+
+            <div id="eventadmin" class="adminsection">
+                <!-- Event Admin Section -->
+                <h2 class="admin-title">Event Management</h2>
+                
+                <!-- Input Fields for Event Information -->
+                <div class="event-inputs">
+                    <input type="text" id="eventTitle" placeholder="Event Title" class="styled-input">
+                    <input type="text" id="eventSubtitle" placeholder="Event Subtitle" class="styled-input">
+                    <input type="date" id="eventDate" class="styled-input">
+                    <input type="text" id="eventImage" placeholder="Image URL" class="styled-input">
+                </div>
+                
+                <!-- Buttons for Adding, Editing, and Removing Events -->
+                <div class="button-container">
+                    <button id="addEventButton" class="styled-button">Add Event</button>
+                    
+                    <!-- Input for targeting specific data --> 
+                    <input type="text" id="editTargetInput" placeholder="Enter ID or Key" class="styled-input" style="margin-left: 10px; width: 150px;">
+                    <button id="editEventButton" class="styled-button">Edit Event</button>
+                    
+                    <input type="text" id="removeTargetInput" placeholder="Enter ID or Key" class="styled-input" style="margin-left: 10px; width: 150px;">
+                    <button id="removeEventButton" class="styled-button">Remove Event</button>
+                </div>
+                
+                <!-- Display Container for Event Data -->
+                <div id="eventListContainer" class="event-list-container">
+                    <h3 class="list-title">Events</h3>
+                    <ul id="eventList" class="event-list">
+                        <!-- Dynamic list of events will be added here -->
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+</div> 
 
     <!-- Main Content -->
-    <main id="mainContent" class="main-content">
+<main id="mainContent" class="main-content none">
         <div class="container">
             <!-- Main Dashboard (default view) -->
             <div id="mainDashboard" class="section-view active">
@@ -331,46 +533,83 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                         <div>
-                            <h1 class="page-title">Дугуйлангийн хуваарь</h1>
-                            <p class="page-subtitle">Төрлөөр шүүж харах боломжтой</p>
+                            <h1 class="page-title">Багш нарын мэдээлэл</h1>
+                            <p class="page-subtitle">Indra cyber сургуулийн багш нар</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="filter-section">
-                    <label class="filter-label">Төрөл сонгох:</label>
+                    <label class="filter-label">Багш нар:</label>
                     <div class="type-filter" id="typeFilter"></div>
                 </div>
 
                 <div id="clubsList" class="clubs-grid"></div>
             </div>
             <div id="userView" class="section-view">
-                <div class="logingrid">
-                    <div class="login">
-                        <div id="loginchoose" class="loginchoose">
-                            <div class="choosing">
-                                <div id="parent" class="parent">Эцэг эх</div> | 
-                                <div id="teacher" class="teacher">Багш</div>
+                <div>
+                    <div id="logingridone" class="logingrid">
+                        <div class="login">
+                            <div id="loginchoose" class="loginchoose">
+                                <div class="choosing">
+                                    <div id="parent" class="parent">Эцэг эх</div> | 
+                                    <div id="teacher" class="teacher">Багш</div>
+                                </div>
+                            </div>
+                            <div class="inputclass">
+                                <div class="namechoose">
+                                    <div id="username" onclick="updateinput(`username`)">
+                                        Нэвтрэх нэр
+                                    </div>
+                                    <div>|</div>
+                                    <div id="email" onclick="updateinput(`email`)">
+                                        Email
+                                    </div>
+                                </div>
+                                <div class="inputcenter">
+                                    <div id="wrongunpw" class="wrong">Хэрэглэгчийн нэр эсвэл нууц үг буруу байна.</div>
+                                    <div class="column">
+                                        <input autocomplete="off" placeholder="Нэвтрэх нэр" id="loginbar" class="loginbar" type="text">
+                                        <input autocomplete="off" placeholder="Нэвтрэх нууц үг" id="passwordbar" class="loginbar" type="password">
+                                    </div>
+                                </div>
+                                <div id="submit" class="submit">Нэвтрэх</div>
+                                <div id="signup" class="signup">
+                                    Бүртгүүлэх
+                                </div>
                             </div>
                         </div>
-                        <div class="inputclass">
-                            <div class="namechoose">
-                                <div id="username" onclick="updateinput(`username`)">
-                                    Нэвтрэх нэр
-                                </div>
-                                <div>|</div>
-                                <div id="email" onclick="updateinput(`email`)">
-                                    Email
-                                </div>
+                    </div>
+                    <div id="logingridtwo" class="logingrid none">
+                        <div class="login">
+                            <div id="gobacktologin" class="gobacktologin">
+                                < Буцах
                             </div>
-                            <div class="inputcenter">
-                                <div id="wrongunpw" class="wrong">Хэрэглэгчийн нэр эсвэл нууц үг буруу байна.</div>
-                                <div class="column">
-                                    <input placeholder="Нэвтрэх нэр" id="loginbar" class="loginbar" type="text">
-                                    <input placeholder="Нэвтрэх нууц үг" id="passwordbar" class="loginbar" type="password">
+                            <div class="signup-contain-elements">
+                                <div class="signup-text">
+                                    Цаашиг хэрэглэх нэрээ оруулна уу.
                                 </div>
+                                <input autocomplete="off" placeholder="Нэр" id="signupname" class="loginbar" type="text">
                             </div>
-                            <div id="submit" class="submit">Нэвтрэх</div>
+                            <div class="signup-contain-elements">
+                                <div class="signup-text">
+                                    Mail хаягаа оруулна уу.
+                                </div>
+                                <input autocomplete="off" placeholder="Email" id="signupmail" class="loginbar" type="text">
+                            </div>
+                            <div class="signup-contain-elements">
+                                <div class="signup-text">
+                                    Нууц үг-ээ оруулна уу.
+                                </div>
+                                <input autocomplete="off" placeholder="Нууц үг" id="signuppass" class="loginbar" type="text">
+                            </div>
+                            <div class="signup-contain-elements">
+                                <div class="signup-text">
+                                    Нууц үг-ээ дахин оруулна уу.
+                                </div>
+                                <input autocomplete="off" placeholder="Нууц үг" id="signuppasssecond" class="loginbar" type="text">
+                            </div>
+                            <div id="submitsignup" class="submit">Бүртгүүлэх</div>
                         </div>
                     </div>
                 </div>
@@ -445,11 +684,34 @@
         <div id="user" class="userinterface">
             <div id="loginuser" class="login-user">Нэвтрэх / Бүртгүүлэх</div>
         </div>
-        <div id="user" class="userinterface">
-            <div id="loginuser" class="login-user">Хичээлийн дүн</div>
+        <div id="grade" class="gradeinterface none">
+            <div id="gradeuser" class="login-user">Хичээлийн дүн</div>
         </div>
     </aside>
 
-    <script src="script.js"></script>
+        <!-- Nothing from v11 needed -->
+        <!-- <script type="module">
+            // Import the functions you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+            import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+        
+            // Your Firebase config
+            const firebaseConfig = {
+            apiKey: "AIzaSyDf98s55S3a3TOYGYHxBf6E_JAKg99qU_E",
+            authDomain: "huviar-5b906.firebaseapp.com",
+            databaseURL: "https://huviar-5b906-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "huviar-5b906",
+            storageBucket: "huviar-5b906.firebasestorage.app",
+            messagingSenderId: "771542679477",
+            appId: "1:771542679477:web:be5456e5417b1cc93b63fc",
+            measurementId: "G-N1892M58VE"
+            };
+        
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+        </script>  -->
+  <script type="module" src="script.js"></script>
+  <script type="module" src="function.js"></script>
 </body>
 </html>

@@ -1,3 +1,75 @@
+// Get a reference to the database
+// script.js
+import { db } from './firebase.js';
+import { getDatabase, ref, set, get, child, update, remove, push } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+
+const dbRef = ref(db);
+
+// get(dbRef)
+//   .then((snapshot) => {
+//     if (snapshot.exists()) {
+//       const data = snapshot.val();
+//       console.log(data); // prints entire database
+//     } else {
+//       console.log("No data available");
+//     }
+//   })
+//   .catch((error) => {
+//     console.error("Error reading data:", error);
+//   });
+
+//   get(dbRef).then(snapshot => {
+//     if(snapshot.exists()){
+//       const data = snapshot.val();
+  
+//       // Access Class
+//       console.log('class')
+//       console.log(data.Class);
+  
+//       // Access all Teachers
+//       console.log('teacher')
+//       console.log(data.Teacher);
+  
+//       // Access first teacher
+//       console.log('teacher')
+//       console.log(data.Teacher[0]);
+  
+//       // Access first teacher's name
+//       console.log('teacher name')
+//       console.log(data.Teacher[0].Name);
+  
+//       // Access events
+//       console.log('events')
+//       console.log(data.events);
+//     }
+//   });  
+
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDf98s55S3a3TOYGYHxBf6E_JAKg99qU_E",
+    authDomain: "huviar-5b906.firebaseapp.com",
+    databaseURL: "https://huviar-5b906-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "huviar-5b906",
+    storageBucket: "huviar-5b906.firebasestorage.app",
+    messagingSenderId: "771542679477",
+    appId: "1:771542679477:web:be5456e5417b1cc93b63fc",
+    measurementId: "G-N1892M58VE"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+
+
+
 let prevnum = []
 // console.log(analytics)
 
@@ -30,22 +102,11 @@ const userData = [
 ]
 const teacherData = [
         {   
-            mail : 'jargal123@gmail.com',
-            username : 'jargal123',
-            password : 'passjargal'
+            mail : '',
+            username : 'admin123',
+            password : 'adminpass'
         },
-        {   
-            mail : 'jargal124@gmail.com',
-            username : 'jargal124',
-            password : 'passjargal'
-        },
-        {   
-            mail : 'jargal125@gmail.com',
-            username : 'jargal125',
-            password : 'passjargal'
-        }
 ]
-
 const scheduleData = {
     '12А': {
         Monday : {
@@ -285,7 +346,6 @@ let isPaused = false;
 const button = document.getElementById('playPauseBtn');
 const icon = document.getElementById('buttonIcon');
 
-// Function to update button icon
 function updateButton() {
   if (!isPaused) {
     // Show Play icon
@@ -524,8 +584,7 @@ function switchSection(section) {
 
 
 function goHome() {
-    loopedvalue = 7
-    console.log(loopedvalue)
+    loopvalue = 7
     currentSection = 'main';
     
     // Hide all sections
@@ -951,8 +1010,8 @@ isPaused = false
     8: 'teacherView'
     };
     
-    for(i = 1; i <= 8 ; i++){
-        a = document.getElementById(Map[i]).classList
+    for( let i = 1; i <= 8 ; i++){
+        let a = document.getElementById(Map[i]).classList
         if(a.length == 2){
             a.remove('active')
             userView.classList.add('active')
@@ -963,7 +1022,7 @@ isPaused = false
 
 
 const parent = document.getElementById('parent')
-let parentactive = false
+let parentactive = true
 let teacheractive = false
 const teacher = document.getElementById('teacher')
 const loginbar = document.getElementById('loginbar')
@@ -971,15 +1030,28 @@ parent.addEventListener('click', ()=>{
     parentactive = true
     teacheractive = false
     chooseactive()
-    console.log('parent')
     
 })
 teacher.addEventListener('click', ()=>{
     parentactive = false
     teacheractive = true
     chooseactive()
-    console.log('teacher')
 })
+
+if(parentactive == true){
+    chooseactive()
+}
+document.getElementById('loginuser').addEventListener('click', ()=> {
+    if(document.getElementById('loginuser').innerText == 'Хэрэглэгчээс гарах'){
+        displaygrade(false)
+        parentactive = true
+        teacheractive = false
+        inputbar.value = ''
+        passbar.value = ''
+        document.getElementById('loginuser').innerText = 'Нэвтрэх / Бүртгүүлэх'
+        }
+    }
+)
 
 function chooseactive () {
     if(parentactive){
@@ -1007,7 +1079,7 @@ const passbar = document.getElementById('passwordbar')
 const usernameselect = document.getElementById('username')
 const teacherselect = document.getElementById('email')
 const wrongtext = document.getElementById('wrongunpw')
-const loginsuccess = false
+let loginsuccess = false
 // passbar.style.opacity = '0'
 
 function updateinput(input){
@@ -1045,38 +1117,73 @@ passbar.addEventListener('keydown', ()=>{
 }
 })
 
-submit.addEventListener('click', ()=>{
-    matchedvalueun = 0
-    matchedvaluepw = 0
+submit.addEventListener('click', ()=>{ 
+    console.log(teacheractive + ' teacher ')
+    console.log(parentactive + ' parent ') 
+    let matchedvalueun = 0
+    let matchedvaluepw = 0
     let matchedun
     let matchedpw
-    if( inputtypeusername ){
-        for ( i = 0 ; i < userData.length ; i++ ){
-            if(loginbar.value == userData[i].username && matchedvalueun == 0){
-                matchedun = userData[i].username;
-                matchedvalueun = 1
-            }else if( matchedvalueun == 0){
-                matchedun = null
+    if(parentactive == true){
+        if( inputtypeusername ){
+            for ( let i = 0 ; i < userData.length ; i++ ){
+                if(loginbar.value == userData[i].username && matchedvalueun == 0){
+                    matchedun = userData[i].username;
+                    matchedvalueun = 1
+                }else if( matchedvalueun == 0){
+                    matchedun = null
+                }
             }
         }
-    }
-    if( !inputtypeusername ){
-        for ( i = 0 ; i < userData.length ; i++ ){
-            if(loginbar.value == userData[i].mail && matchedvalueun == 0){
-                matchedun = userData[i].mail;
-                matchedvalueun = 1
-            }else if( matchedvalueun == 0){
-                matchedun = null
+        if( !inputtypeusername ){
+            for ( let i = 0 ; i < userData.length ; i++ ){
+                if(loginbar.value == userData[i].mail && matchedvalueun == 0){
+                    matchedun = userData[i].mail;
+                    matchedvalueun = 1
+                }else if( matchedvalueun == 0){
+                    matchedun = null
+                }
             }
         }
-    }
-    if( ispass ){
-        for ( i = 0 ; i < userData.length ; i++ ){
-            if(passbar.value == userData[i].password && matchedvaluepw == 0){
-                matchedpw = userData[i].password;
-                matchedvaluepw = 1
-            }else if( matchedvalueun == 0){
-                matchedpw = null
+        if( ispass ){
+            for ( let i = 0 ; i < userData.length ; i++ ){
+                if(passbar.value == userData[i].password && matchedvaluepw == 0){
+                    matchedpw = userData[i].password;
+                    matchedvaluepw = 1
+                }else if( matchedvalueun == 0){
+                    matchedpw = null
+                }
+            }
+        }
+    }else if( teacheractive == true){
+        if( inputtypeusername ){
+            for ( let i = 0 ; i < teacherData.length ; i++ ){
+                if(loginbar.value == teacherData[i].username && matchedvalueun == 0){
+                    matchedun = teacherData[i].username;
+                    matchedvalueun = 1
+                }else if( matchedvalueun == 0){
+                    matchedun = null
+                }
+            }
+        }
+        if( !inputtypeusername ){
+            for ( let i = 0 ; i < teacherData.length ; i++ ){
+                if(loginbar.value == teacherData[i].mail && matchedvalueun == 0){
+                    matchedun = teacherData[i].mail;
+                    matchedvalueun = 1
+                }else if( matchedvalueun == 0){
+                    matchedun = null
+                }
+            }
+        }
+        if( ispass ){
+            for ( let i = 0 ; i < teacherData.length ; i++ ){
+                if(passbar.value == teacherData[i].password && matchedvaluepw == 0){
+                    matchedpw = teacherData[i].password;
+                    matchedvaluepw = 1
+                }else if( matchedvalueun == 0){
+                    matchedpw = null
+                }
             }
         }
     }
@@ -1085,14 +1192,28 @@ submit.addEventListener('click', ()=>{
     if(matchedun == null && matchedpw == null){
         wrongtext.style.opacity = '1'
     }
-    if(matchedpw && matchedun){
-        console.log('login success')
-        userView.classList.remove('active')
-        document.getElementById('mainDashboard').classList.add('active')
-        loginsuccess = true
-    }else{
-        console.log('login failed')
-        loginsuccess = false
+    if(parentactive){
+        if(matchedpw && matchedun){
+            userView.classList.remove('active')``
+            document.getElementById('mainDashboard').classList.add('active')
+            loginsuccess = true
+            displaygrade(true)
+            document.getElementById('loginuser').innerText = 'Хэрэглэгчээс гарах'
+        }else{
+            displaygrade(false)
+            loginsuccess = false
+        }
+    }else if(teacheractive){
+        if(matchedpw && matchedun){
+            userView.classList.remove('active')
+            document.getElementById('mainContent').classList.add('none')
+            document.getElementById('adminpanel').classList.remove('none')
+            loginsuccess = true
+            // displaygrade(true)
+        }else{
+            displaygrade(false)
+            loginsuccess = false
+        }
     }
 })
 
@@ -1109,10 +1230,8 @@ function updateSchedule(day, num) {
         3: 'Thursday',
         4: 'Friday',
     }
-    console.log(prevnum)
     let prevday = activeadd[prevnum[0]]
     let curday = activeadd[prevnum[1]]
-    console.log(prevday,curday)
     if(!prevday && curday){
         document.getElementById('Monday').classList.remove('active')
         document.getElementById(curday).classList.add('active')
@@ -1140,7 +1259,7 @@ function updateSchedule(day, num) {
         9: '14:50-15:30',
         10: '15:35-16:15'
       };
-    for( i = 1; i <= 10; i++){
+    for( let i = 1; i <= 10; i++){
         if (!scheduleday[i]) continue;
 
         // Create an HTML block for each time slot
@@ -1155,3 +1274,68 @@ function updateSchedule(day, num) {
         `
     }
 }
+
+const signup = document.getElementById('signup')
+
+
+function displaygrade(boolean){
+    let a = document.getElementById('grade')
+    if(boolean == true){
+        a.classList.remove('none')
+    }else if(boolean == false){
+        a.classList.add('none')
+    }
+}
+
+const gobackto = document.getElementById('gobacktologin')
+const gridone = document.getElementById('logingridone')
+const gridtwo = document.getElementById('logingridtwo')
+let grids = false
+
+gobackto.addEventListener('click', ()=> {
+    if ( grids == false){
+        grids = true
+        gridone.classList.remove('none')
+        gridtwo.classList.add('none')
+    }else{
+        gridone.classList.add('none')
+        gridtwo.classList.remove('none')
+        grids = false
+    }
+})
+function gobacktolog (){
+    if ( grids == false){
+        grids = true
+        gridone.classList.remove('none')
+        gridtwo.classList.add('none')
+    }else{
+        gridone.classList.add('none')
+        gridtwo.classList.remove('none')
+        grids = false
+}
+}
+
+signup.addEventListener('click', ()=> {
+    grids = true
+    gobacktolog()
+    console.log('burtguuleh')
+})
+
+window.gobacktolog = gobacktolog;
+window.toggleTimer = toggleTimer;
+window.togglePlayPause = togglePlayPause;
+window.selectClass = selectClass;
+window.selectClubType = selectClubType;
+window.updateSchedule = updateSchedule;
+window.updateTeacher = updateTeacher;
+window.switchSection = switchSection;
+window.goHome = goHome;
+window.renderClassSchedule = renderClassSchedule;
+window.renderClubs = renderClubs;
+window.renderPsychologistSlots = renderPsychologistSlots;
+window.renderFoodMenu = renderFoodMenu;
+window.renderRules = renderRules;
+window.renderEvents = renderEvents;
+window.updateEventTime = updateEventTime;
+window.displaygrade = displaygrade;
+window.updateinput = updateinput;

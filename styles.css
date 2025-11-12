@@ -11,6 +11,169 @@ body {
     color: white;
 }
 
+.admin-panel {
+    width: 90%;
+    margin: 5rem;
+    padding: 3rem;
+    background-color: white;
+    border: 0px solid black;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0px 0px 12px rgb(222, 222, 222);
+}
+
+.chooses {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    color: black;
+    flex-wrap: wrap;
+}
+
+.admintext {
+    color: black;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+}
+
+.individualchoose {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 50px;
+    margin: 10px;
+    transition: all ease 0.4s;
+}
+
+.individualchoose:hover{
+    border-radius: 30px;
+    margin: 2px;
+    text-align: center;
+    padding: 15px;
+    background-color: rgb(228, 228, 228);
+}
+
+.gobacktologin {
+    position: absolute;
+    left: 15%;
+    top: 5%;
+    transition: all 0.3s ease;
+}
+
+.gobacktologin:hover {
+    font-size: 18px;
+    color: #d0c8ff;
+}
+
+#scheduleadmin {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Input styling */
+.styled-input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.styled-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Label styling */
+.styled-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Select dropdown styling */
+.styled-select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.styled-select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button styling */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.styled-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.styled-button:hover {
+    background-color: #0056b3;
+}
+
+.styled-button:focus {
+    outline: none;
+}
+
+/* Inputs container spacing */
+.inputs-container div {
+    margin-bottom: 10px;
+}
+
+.selectionadmin {
+    margin: 1rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    border: 1px solid black;
+    border-radius: 15px;
+    font-size: 20px;
+}
+
+.adminsection {
+    display: none;
+}
+
+.adminsection.adminactive {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Header */
 .header {
     display: flex;
@@ -1404,8 +1567,11 @@ body {
     gap: 5px;
     font-size: 15px;
     color: white;
+    transition: all 0.3s ease;
 }
 .loginbar:focus {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
     box-shadow: 0px 0px 5px rgb(255, 255, 255);
     outline: none;
 }
@@ -1445,6 +1611,8 @@ body {
 }
 .submit:hover {
     background-color: #2441cf;
+    box-shadow: 0px 0px 2px rgb(9, 104, 156);
+    border: 0.2px solid #2441cf;
     font-size: 1.7rem;
     cursor: default
 }
@@ -1621,8 +1789,36 @@ body {
         gap: 12px;
     }
 }
+.none {
+    display: none;
+}
+.signup {
+    font-size: 15px;
+    margin-bottom: 1rem;
+    transition: 0.3s all ease;
+}
+.signup:hover {
+    cursor: default;
+    color: rgb(55, 172, 227);
+    font-size: 18px;
+}
+.signup-contain-elements {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+.signup-text {
+    text-wrap: wrap;
+    font-size: 15px;
+    padding: 0.5rem;
+}
+
 @media (max-width: 450px) {
     .class-filter {
         grid-template-columns: repeat(3, 1fr);
+    }
+    .signup-text{
+        font-size: 12px;
     }
 }
