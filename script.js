@@ -1321,6 +1321,10 @@ signup.addEventListener('click', ()=> {
     console.log('burtguuleh')
 })
 
+document.getElementById('qrcodes').addEventListener('click',()=> {
+    window.open('https://indracyberbooking.netlify.app/', '_blank');
+})
+
 window.gobacktolog = gobacktolog;
 window.toggleTimer = toggleTimer;
 window.togglePlayPause = togglePlayPause;

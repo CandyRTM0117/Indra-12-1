@@ -18,7 +18,7 @@
         </div>
     </header>
     
-<div id="adminpanel" class="admin-panel">
+<div id="adminpanel" class="admin-panel none">
         <div>
             <div class="admintext">
                 Admin
@@ -36,12 +36,15 @@
                 <div class="individualchoose">
                     Events
                 </div>
+                <div class="individualchoose">
+                    Food
+                </div>
             </div>
 
 
-            <div id="scheduleadmin" class="adminsection adminactive">
+            <div id="scheduleadmin" class="adminsection">
                 <!-- Small input above -->
-                <!-- <input type="text" id="smallInput" placeholder="Enter title" class="styled-input"> -->
+                <input type="text" id="smallInput" placeholder="Enter title" class="styled-input">
                 
                 <!-- Dropdown to choose days -->
                 <label for="daySelect" class="styled-label">Choose a day:</label>
@@ -94,7 +97,6 @@
                     <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
                         <input type="text" id="scheduleInput" placeholder="Enter schedule title" class="styled-input" style="flex: 1; min-width: 200px;">
                         <button id="addScheduleButton" class="styled-button">Add</button>
-                        <button id="editScheduleButton" class="styled-button">Edit</button>
                         <button id="removeScheduleButton" class="styled-button">Remove</button>
                     </div>
                 </div>
@@ -121,13 +123,7 @@
                 <!-- Buttons for Adding, Editing, and Removing Clubs -->
                 <div class="button-container">
                     <button id="addClubButton" class="styled-button">Add Club</button>
-                    
-                    <!-- Edit Button with Input -->
-                    <div style="display: inline-flex; align-items: center;">
-                        <button id="editClubButton" class="styled-button">Edit Club</button>
-                        <input type="text" id="editClubInput" placeholder="Club to Edit" class="styled-input" style="margin-left: 10px; width: 150px;">
-                    </div>
-                    
+
                     <!-- Remove Button with Input -->
                     <div style="display: inline-flex; align-items: center; margin-top: 10px;">
                         <button id="removeClubButton" class="styled-button">Remove Club</button>
@@ -159,13 +155,7 @@
                 <!-- Buttons for Adding, Editing, and Removing Teachers -->
                 <div class="button-container">
                     <button id="addTeacherButton" class="styled-button">Add Teacher</button>
-                    
-                    <!-- Edit Button with Input -->
-                    <div style="display: inline-flex; align-items: center;">
-                        <button id="editTeacherButton" class="styled-button">Edit Teacher</button>
-                        <input type="text" id="editTeacherInput" placeholder="Teacher to Edit" class="styled-input" style="margin-left: 10px; width: 150px;">
-                    </div>
-                    
+                
                     <!-- Remove Button with Input -->
                     <div style="display: inline-flex; align-items: center; margin-top: 10px;">
                         <button id="removeTeacherButton" class="styled-button">Remove Teacher</button>
@@ -198,10 +188,7 @@
                 <!-- Buttons for Adding, Editing, and Removing Events -->
                 <div class="button-container">
                     <button id="addEventButton" class="styled-button">Add Event</button>
-                    
-                    <!-- Input for targeting specific data --> 
-                    <input type="text" id="editTargetInput" placeholder="Enter ID or Key" class="styled-input" style="margin-left: 10px; width: 150px;">
-                    <button id="editEventButton" class="styled-button">Edit Event</button>
+                
                     
                     <input type="text" id="removeTargetInput" placeholder="Enter ID or Key" class="styled-input" style="margin-left: 10px; width: 150px;">
                     <button id="removeEventButton" class="styled-button">Remove Event</button>
@@ -216,12 +203,40 @@
                 </div>
             </div>
 
-
+            <div id="foodadmin" class="adminsection adminactive">
+                <h2 class="admin-title">Weekly Food List Management</h2>
+                
+                <!-- Input Fields for Food Information -->
+                <div class="food-inputs">
+                    <input type="text" id="foodDay" placeholder="Day (e.g., Monday)" class="styled-input">
+                    <input type="text" id="foodMenu" placeholder="Menu (e.g., Pasta & Salad)" class="styled-input">
+                </div>
+            
+                <!-- Buttons for Adding and Removing Food Items -->
+                <div class="button-container">
+                    <button id="addFoodButton" class="styled-button">Add Food</button>
+                    
+                    <!-- Remove Button with Input -->
+                    <div style="display: inline-flex; align-items: center; margin-top: 10px;">
+                        <button id="removeFoodButton" class="styled-button">Remove Food</button>
+                        <input type="text" id="removeFoodInput" placeholder="Day to Remove" class="styled-input" style="margin-left: 10px; width: 150px;">
+                    </div>
+                </div>
+            
+                <!-- Display Container for Food List -->
+                <div id="foodListContainer" class="teacher-list-container">
+                    <h3 class="list-title">Weekly Food List</h3>
+                    <ul id="foodList" class="teacher-list">
+                        <!-- Dynamic list of foods will be added here -->
+                    </ul>
+                </div>
+            </div>
+            
         </div>
 </div> 
 
     <!-- Main Content -->
-<main id="mainContent" class="main-content none">
+<main id="mainContent" class="main-content">
         <div class="container">
             <!-- Main Dashboard (default view) -->
             <div id="mainDashboard" class="section-view active">
@@ -375,10 +390,11 @@
 
                     <div class="info-card qr-card">
                         <h3>Бүртгүүлэх</h3>
-                        <div class="qr-code">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div id="qrcodes" class="qr-code">
+                            <img src="psychologist.png" alt="psychologist" width="160px" height="160px">
+                            <!-- <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
-                            </svg>
+                            </svg> -->
                         </div>
                         <p class="qr-text">QR код уншуулж бүртгүүлэх</p>
                     </div>
