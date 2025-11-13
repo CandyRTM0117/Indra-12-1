@@ -1326,33 +1326,46 @@ document.getElementById('qrcodes').addEventListener('click',()=> {
 })
 
 document.getElementById('schedule').addEventListener('click',()=>{
-    console.log(document.getElementById('schedule').classList)
-    changeactiveadmin('schedule')
+    changeactiveadmin('schedule','scheduleadmin')
 })
 
 document.getElementById('clubs').addEventListener('click',()=>{
-    console.log(document.getElementById('clubs').classList)
-    changeactiveadmin('clubs')
+    changeactiveadmin('clubs','clubadmin')
 })
 
-document.getElementById('teacherad').addEventListener('click',()=>{
-    console.log(document.getElementById('teacherad').classList)
-    changeactiveadmin('teacherad')
+document.getElementById('event').addEventListener('click',()=>{
+    changeactiveadmin('event','eventadmin')
 })
-
-document.getElementById('events').addEventListener('click',()=>{
-    console.log(document.getElementById('events').classList)
-    changeactiveadmin('events')
+document.getElementById('teach').addEventListener( 'click', ()=>{
+    changeactiveadmin('teach','teachadmin')
 })
 
 document.getElementById('food').addEventListener('click',()=>{
-    console.log(document.getElementById('food').classList)
-    changeactiveadmin('events')
+    changeactiveadmin('food','foodadmin')
 })
 
-function changeactiveadmin(){
+function changeactiveadmin(key, seckey){
+    const adminsections = ['schedule', 'clubs', 'teach', 'event', 'food']
+    const adminsectionchanges = ['scheduleadmin', 'clubadmin', 'teachadmin', 'eventadmin', 'foodadmin']
+    for( let i = 0; i < adminsections.length ; i++){
+        if(document.getElementById(adminsectionchanges[i]).classList.length == 2){
+            document.getElementById(adminsectionchanges[i]).classList.remove('adminactive')
+        }
+        document.getElementById(adminsections[i]).classList.remove('active')
+    }
+    document.getElementById(seckey).classList.add('adminactive')
+    document.getElementById(key).classList.add('active')
 
 }
+
+document.getElementById('gobacktomain').addEventListener('click', ()=>{
+    document.getElementById('adminpanel').classList.add('none')
+    document.getElementById('mainContent').classList.remove('none')
+    document.getElementById('mainDashboard').classList.add('active')
+    console.log(document.getElementById('adminpanel').classList)
+    console.log(document.getElementById('mainContent').classList)
+})
+
 
 window.changeactiveadmin = changeactiveadmin
 window.gobacktolog = gobacktolog;
