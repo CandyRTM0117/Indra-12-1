@@ -18,31 +18,31 @@
         </div>
     </header>
     
-<div id="adminpanel" class="admin-panel none">
+<div id="adminpanel" class="admin-panel">
         <div>
             <div class="admintext">
                 Admin
             </div>
             <div class="chooses">
-                <div class="individualchoose">
+                <div id="schedule" class="individualchoose active">
                     Schedule
                 </div>
-                <div class="individualchoose">
+                <div id="clubs" class="individualchoose">
                     Clubs
                 </div>
-                <div class="individualchoose">
+                <div id="teacherad" class="individualchoose">
                     Teacher
                 </div>
-                <div class="individualchoose">
+                <div id="events" class="individualchoose">
                     Events
                 </div>
-                <div class="individualchoose">
+                <div id="food" class="individualchoose">
                     Food
                 </div>
             </div>
 
 
-            <div id="scheduleadmin" class="adminsection">
+            <div id="scheduleadmin" class="adminsection adminactive">
                 <!-- Small input above -->
                 <input type="text" id="smallInput" placeholder="Enter title" class="styled-input">
                 
@@ -203,7 +203,7 @@
                 </div>
             </div>
 
-            <div id="foodadmin" class="adminsection adminactive">
+            <div id="foodadmin" class="adminsection">
                 <h2 class="admin-title">Weekly Food List Management</h2>
                 
                 <!-- Input Fields for Food Information -->
@@ -236,7 +236,7 @@
 </div> 
 
     <!-- Main Content -->
-<main id="mainContent" class="main-content">
+<main id="mainContent" class="main-content none">
         <div class="container">
             <!-- Main Dashboard (default view) -->
             <div id="mainDashboard" class="section-view active">

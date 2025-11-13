@@ -48,7 +48,7 @@ body {
     transition: all ease 0.4s;
 }
 
-.individualchoose:hover{
+.individualchoose.active{
     border-radius: 30px;
     margin: 2px;
     text-align: center;

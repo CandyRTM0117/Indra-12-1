@@ -1325,6 +1325,36 @@ document.getElementById('qrcodes').addEventListener('click',()=> {
     window.open('https://indracyberbooking.netlify.app/', '_blank');
 })
 
+document.getElementById('schedule').addEventListener('click',()=>{
+    console.log(document.getElementById('schedule').classList)
+    changeactiveadmin('schedule')
+})
+
+document.getElementById('clubs').addEventListener('click',()=>{
+    console.log(document.getElementById('clubs').classList)
+    changeactiveadmin('clubs')
+})
+
+document.getElementById('teacherad').addEventListener('click',()=>{
+    console.log(document.getElementById('teacherad').classList)
+    changeactiveadmin('teacherad')
+})
+
+document.getElementById('events').addEventListener('click',()=>{
+    console.log(document.getElementById('events').classList)
+    changeactiveadmin('events')
+})
+
+document.getElementById('food').addEventListener('click',()=>{
+    console.log(document.getElementById('food').classList)
+    changeactiveadmin('events')
+})
+
+function changeactiveadmin(){
+
+}
+
+window.changeactiveadmin = changeactiveadmin
 window.gobacktolog = gobacktolog;
 window.toggleTimer = toggleTimer;
 window.togglePlayPause = togglePlayPause;
@@ -1343,3 +1373,4 @@ window.renderEvents = renderEvents;
 window.updateEventTime = updateEventTime;
 window.displaygrade = displaygrade;
 window.updateinput = updateinput;
+
