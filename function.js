@@ -75,35 +75,29 @@ function addSchedule(name, array, day) {
             const currentSchedule = snapshot.exists() ? snapshot.val() : {};
             const classSchedule = currentSchedule[name] || {};
 
-            // Check if the day already exists
-            if (classSchedule[day]) {
-                console.warn(`Day "${day}" already exists in ${name}'s schedule.`);
-                return;
-            }
-
-            // Check if the number of days exceeds 5
-            if (Object.keys(classSchedule).length >= 5) {
+            // Check if the number of days exceeds 5 (optional rule)
+            if (!classSchedule[day] && Object.keys(classSchedule).length >= 5) {
                 console.warn('Cannot add more than 5 days to the schedule.');
                 return;
             }
 
-            // Construct schedule structure exactly as desired
+            // Construct schedule structure — always override the day's content
+            const updatedDaySchedule = array.reduce((acc, value, index) => {
+                acc[`schedule${index + 1}`] = value || '';
+                return acc;
+            }, {});
+
             const newScheduleData = {
-                [name]: {
-                    ...classSchedule,
-                    [day]: array.reduce((acc, value, index) => {
-                        acc[`schedule${index + 1}`] = value || ''; // clearer keys: schedule1..schedule10
-                        return acc;
-                    }, {})
-                }
+                ...classSchedule,
+                [day]: updatedDaySchedule
             };
 
-            // Update only the target class (not the whole Schedule)
+            // Update only the target class in the database
             const classRef = ref(db, `Schedule/${name}`);
 
-            update(classRef, newScheduleData[name])
+            update(classRef, newScheduleData)
                 .then(() => {
-                    console.log(`Day "${day}" added successfully to ${name}'s schedule!`);
+                    console.log(`Day "${day}" for ${name} updated successfully!`);
                 })
                 .catch((error) => {
                     console.error('Error writing data:', error);
@@ -113,6 +107,7 @@ function addSchedule(name, array, day) {
             console.error('Error fetching current schedule:', error);
         });
 }
+
 
 const scheduleInput = document.getElementById('scheduleInput');
 
