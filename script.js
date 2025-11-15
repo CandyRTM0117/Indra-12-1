@@ -341,10 +341,23 @@ let isRunning = false; // track state
 
 
 let isPaused = false;
+let isPausedatStart = 0;
 
 // Get elements
 const button = document.getElementById('playPauseBtn');
 const icon = document.getElementById('buttonIcon');
+
+
+function pauseToggle (){
+    if(isPausedatStart === 0){
+        toggleTimer(false)
+        isPaused = true
+        updateButton()
+    }
+    isPausedatStart = 1
+    console.log('haha')
+
+}
 
 function updateButton() {
   if (!isPaused) {
@@ -363,13 +376,11 @@ function updateButton() {
 
 
 
-
-
-
 function toggleTimer(num){
+    console.log(isPaused)
     if(num){
         clearInterval(timer)
-    }else{
+    }else {
     if ( isPaused === false ) {
         timer = setInterval(() => {
             let percentage = (time / maxseconds) * 100;
@@ -461,6 +472,7 @@ updateButton();
 
 // Initialize
 function init() {
+    pauseToggle();
     renderClassSchedule();
     renderClubs();
     renderPsychologistSlots();
@@ -631,6 +643,9 @@ function updateCarousel() {
         }
     });
 }
+
+
+
 
 
 
@@ -1367,6 +1382,7 @@ document.getElementById('gobacktomain').addEventListener('click', ()=>{
 })
 
 
+window.pauseToggle = pauseToggle;
 window.changeactiveadmin = changeactiveadmin
 window.gobacktolog = gobacktolog;
 window.toggleTimer = toggleTimer;
