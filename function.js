@@ -188,8 +188,6 @@ function addClub(name, when, teacher, lab, duration, purpose, target) {
                     Teacher: teacher,
                     Lab: lab,
                     Duration: duration,
-                    Purpose: purpose,
-                    Target: target
                 }
             };
 
