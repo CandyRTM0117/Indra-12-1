@@ -17,7 +17,9 @@
         <div id="header-line">
         </div>
     </header>
-    
+    <div class="imgclub">
+        <img src="https://scontent.fuln6-1.fna.fbcdn.net/v/t39.30808-6/556898631_122162810366396943_5611423242115938312_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=zksq3Xif8EoQ7kNvwFYrhFF&_nc_oc=AdmNF8Su7uVp6LUcYq7bWb3BCBQ2V0qHOYRdsl7PIcUGKl5g0dsOuzZHTEOeLoLsSetXKKmjhLP0JCDo7IuP3Oyc&_nc_zt=23&_nc_ht=scontent.fuln6-1.fna&_nc_gid=i_Ah1VH4y3VovyY-QYsaAA&oh=00_AfhpKSP0An8Gj9NwYhKBnxk8UJFT79-nqBCxO4srEz6CKw&oe=691F7CFB" alt="" id="imgclubid" class="imgclubs none">
+    </div>
 <div id="adminpanel" class="admin-panel none">
         <div>
             <div class="admintext">
@@ -119,6 +121,7 @@
                     <input type="text" id="clubTeacher" placeholder="Teacher Name" class="styled-input">
                     <input type="text" id="clubLab" placeholder="Lab (e.g., Lab 1)" class="styled-input">
                     <input type="text" id="clubDuration" placeholder="Lecture Duration (e.g., 1 hour)" class="styled-input">
+                    <input type="text" id="clubGrade" placeholder="Club Grade" class="styled-input">
                 </div>
                 
                 <!-- Buttons for Adding, Editing, and Removing Clubs -->
@@ -356,12 +359,11 @@
                     </div>
                 </div>
 
-                <div class="filter-section">
-                    <label class="filter-label">Төрөл сонгох:</label>
-                    <div class="type-filter" id="typeFilter"></div>
+                <div id="clubsList" class="clubs-grid">
                 </div>
-
-                <div id="clubsList" class="clubs-grid"></div>
+                <div id="clubLightbox" class="lightbox">
+                    <img id="clubLightboxImg" src="" alt="">
+                </div>
             </div>
 
             <!-- Psychologist View -->
@@ -444,7 +446,8 @@
                     <div class="meal-time-card orange">
                         <span class="meal-emoji">☀️</span>
                         <h3>Өдрийн хоол</h3>
-                        <p>12:00 - 13:00</p>
+                        <p>Дунд анги 11:50 - 12:30</p>
+                        <p>Ахлах анги 12:30 - 13:10</p>
                     </div>
                 </div>
 
@@ -525,7 +528,8 @@
                         </svg>
                         Удахгүй болох арга хэмжээ
                     </h2>
-                    <div id="upcomingEvents" class="events-grid"></div>
+                    <div id="upcomingEvents" class="events-grid">
+                    </div>
                 </div>
 
                 <div class="news-section">
@@ -558,10 +562,12 @@
 
                 <div class="filter-section">
                     <label class="filter-label">Багш нар:</label>
-                    <div class="type-filter" id="typeFilter"></div>
                 </div>
 
-                <div id="clubsList" class="clubs-grid"></div>
+                <div id="teacherListsdata" class="clubs-grid"></div>
+                <div id="lightbox" class="lightbox">
+                    <img id="lightboxImg" src="" alt="">
+                </div>
             </div>
             <div id="userView" class="section-view">
                 <div>

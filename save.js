@@ -1,54 +1,15 @@
-// Get a reference to the database
-// script.js
-import { db } from './firebase.js';
-import { getDatabase, ref, set, get, child, update, remove, push } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
-
-let i
-const dbRef = ref(db);
-let database = null
-
-
-async function loadDatabaseAndRun() {
-    try {
-      const snapshot = await get(dbRef);
-  
-      if (!snapshot.exists()) {
-        console.log("No data available");
-        return; // stop if no data
-      }
-  
-      const data = snapshot.val();
-      database = data;
-      // ... your remaining 1000 lines of code here
-      runRestOfCode(data);
-  
-    } catch (error) {
-      console.error("Error reading data:", error);
-    }
-  }
-
-
-
-function runRestOfCode(data){
-
-    const classes = Object.keys(data.Schedule)
-    const scheduleData = data.Schedule;
-
-
-
-
-
-
-
 let prevnum = []
 // console.log(analytics)
 
 // State
 let currentSection = 'main';
 let sidebarOpen = false;
-let selectedClass = '12-1';
+let selectedClass = '12А';
 let selectedClubType = 'Бүгд';
 let carouselIndex = 0;
+
+// Data
+const classes = ['6-1','6-2','6-3','7-1','7-2','8-1','9-1','10-1','10-2','11-1','11-2','11-3','12-1'];
 
 const userData = [
         {
@@ -74,6 +35,72 @@ const teacherData = [
             password : 'adminpass'
         },
 ]
+const scheduleData = {
+    '12А': {
+        Monday : {
+            1: 'Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Tuesday : {
+            1: '2-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Wednesday : {
+            
+            1: '3-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Thursday : {
+            
+            1: '4-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        },
+        Friday : {
+            1: '5-Math',
+            2: 'Math',
+            3: 'M/hel',
+            4: 'M/hel',
+            5: 'A/hel',
+            6: 'A/hel',
+            7: 'Songon',
+            8: 'Songon',
+            9: 'Class work',
+            10: '',
+        }
+    }
+};
 
 const clubTypes = ['Бүгд', 'Спорт', 'Урлаг', 'Технологи', 'Шинжлэх ухаан'];
 
@@ -99,6 +126,14 @@ const availableSlots = [
 ];
 
 const bookedSlots = ['Даваа 10:00', 'Мягмар 09:00', 'Пүрэв 14:00'];
+
+const weekMenu = [
+    { day: 'Даваа', breakfast: 'Талх, цай, өндөгтэй хуушуур', lunch: 'Будаатай гурилтай шөл, нүүдэл махтай будаа', dinner: 'Хачир, цай', calories: '1850 kcal' },
+    { day: 'Мягмар', breakfast: 'Будаатай цай, зайрмаг', lunch: 'Цуйван, ногоотой салат', dinner: 'Пицца, жүүс', calories: '1920 kcal' },
+    { day: 'Лхагва', breakfast: 'Талх, шүүс, бууз', lunch: 'Банштай шөл, тахиатай будаа', dinner: 'Гамбургер, ногоотой салат', calories: '1880 kcal' },
+    { day: 'Пүрэв', breakfast: 'Тараг, жимс, талх', lunch: 'Гурилтай шөл, махтай хуушуур', dinner: 'Хотдог, жимс', calories: '1900 kcal' },
+    { day: 'Баасан', breakfast: 'Өндөгтэй талх, какао', lunch: 'Спагетти болоньезе, салат', dinner: 'Сэндвич, сүү', calories: '1850 kcal' }
+];
 
 const rules = [
     {
@@ -233,7 +268,7 @@ let isRunning = false; // track state
 
 
 
-let isPaused = true;
+let isPaused = false;
 let isPausedatStart = 0;
 
 // Get elements
@@ -566,9 +601,10 @@ function updateCarousel() {
 function renderClassSchedule() {
     const classFilter = document.getElementById('classFilter');
     const scheduleList = document.getElementById('scheduleList');
+    
     // Render class filter buttons
     classFilter.innerHTML = classes.map(cls => `
-        <button id="classchange" class="class-btn ${cls === selectedClass ? 'active' : ''}" onclick="selectClass('${cls}')">
+        <button class="class-btn ${cls === selectedClass ? 'active' : ''}" onclick="selectClass('${cls}')">
             ${cls}
         </button>
     `).join('');
@@ -579,57 +615,17 @@ function renderClassSchedule() {
 
 function selectClass(cls) {
     selectedClass = cls;
-    updateSchedule('Monday','0')
     renderClassSchedule();
 }
 
 
 function renderTeachers() {
-    const teacherList = document.getElementById('teacherListsdata');
-    const filteredTeachers = data.Teachers;
-    const length = Object.keys(filteredTeachers).length;
-    teacherList.innerHTML = ''; // clear container before adding
-
-    for (let i = 0; i < length; i++) {
-        let dataeach = filteredTeachers[Object.keys(filteredTeachers)[i]];
-        teacherList.innerHTML += `
-        <div class="teacher-card">
-            <img src="${dataeach.Url}" alt="${dataeach.Name}">
-            <h3>${dataeach.Name}</h3>
-            <p>${dataeach.Subject}</p>
-        </div>
-        `;
-    }
-
+    
+    // typeFilter.innerHTML = join('');
+    
     updateTeacher();
-    enableTeacherZoom();
-}
+}   
 
-function enableTeacherZoom() {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-
-    document.querySelectorAll('.teacher-card img').forEach(img => {
-        img.addEventListener('click', () => {
-            lightboxImg.src = img.src;
-            lightbox.classList.add('active');
-        });
-    });
-
-    // Close lightbox when clicking outside the image
-    lightbox.addEventListener('click', (e) => {
-        if (e.target !== lightboxImg) {
-            lightbox.classList.remove('active');
-        }
-    });
-}
-
-// Call this after DOM is ready
-document.addEventListener('DOMContentLoaded', renderTeachers);
-
-
-function updateTeacher() {
-}
 
 
 
@@ -638,8 +634,15 @@ function updateTeacher() {
 
 // Clubs
 function renderClubs() {
+    const typeFilter = document.getElementById('typeFilter');
     const clubsList = document.getElementById('clubsList');
     
+    // Render type filter
+    typeFilter.innerHTML = clubTypes.map(type => `
+        <button class="type-btn ${type === selectedClubType ? 'active' : ''}" onclick="selectClubType('${type}')">
+            ${type}
+        </button>
+    `).join('');
     
     updateClubs();
 }
@@ -669,41 +672,48 @@ function selectClubType(type) {
 
 function updateClubs() {
     const clubsList = document.getElementById('clubsList');
-    const filteredClubs = data.Club;
-    clubsList.innerHTML = ''; // clear previous content
-
-    Object.keys(filteredClubs).forEach((key, i) => {
-        const club = filteredClubs[key];
-        clubsList.innerHTML += `
-            <div class="club-card">
-                <img src="${club.url}" alt="${club.Name}" data-index="${i}">
-                <div class="club-header">
-                    <h3 class="club-name">${club.Name}, ${club.Grade}-р анги</h3>
+    const filteredClubs = selectedClubType === 'Бүгд' 
+        ? clubs 
+        : clubs.filter(club => club.type === selectedClubType);
+    
+    clubsList.innerHTML = filteredClubs.map(club => `
+        <div class="club-card">
+            <div class="club-header">
+                <h3 class="club-name">${club.name}</h3>
+                <span class="club-type-badge">${club.type}</span>
+            </div>
+            <div class="club-details">
+                <div class="club-detail">
+                    <span>🕐</span>
+                    <span>${club.day}</span>
+                </div>
+                <div class="club-detail">
+                    <span>⏰</span>
+                    <span>${club.time}</span>
+                </div>
+                <div class="club-detail">
+                    <span>👨‍🏫</span>
+                    <span>${club.teacher}</span>
+                </div>
+                <div class="club-detail">
+                    <span>📍</span>
+                    <span>${club.room}</span>
                 </div>
             </div>
-        `;
-    });
-
-    enableClubLightbox();
+        </div>
+    `).join('');
 }
 
-function enableClubLightbox() {
-    const lightbox = document.getElementById('clubLightbox');
-    const lightboxImg = document.getElementById('clubLightboxImg');
-
-    document.querySelectorAll('.club-card img').forEach(img => {
-        img.addEventListener('click', () => {
-            lightboxImg.src = img.src; // show clicked image
-            lightbox.classList.add('active');
-        });
-    });
-
-    // Close when clicking anywhere
-    lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+function updateTeacher() {
+    
+    // join('');
 }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', updateClubs);
+
+
+
+
+
 
 
 
@@ -756,43 +766,29 @@ function renderPsychologistSlots() {
 // Food Menu
 function renderFoodMenu() {
     const menuContainer = document.getElementById('weeklyMenu');
-    const foodMenu = data.Food;
-
-    const days = {
-        'Monday': 'Даваа',
-        'Tuesday': 'Мягмар',
-        'Wednesday': 'Лхагва',
-        'Thursday': 'Пүрэв',
-        'Friday': 'Баасан'
-    };
-
-    const dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-
-    menuContainer.innerHTML = ''; // clear previous content
-
-    dayOrder.forEach(day => {
-        const menuEach = foodMenu[day]; // get the menu for this day
-        if (!menuEach) return; // skip if no data
-
-        menuContainer.innerHTML += `
+    
+    menuContainer.innerHTML = weekMenu.map(menu => `
         <div class="menu-day">
             <div class="menu-day-header">
-                <h3 class="day-name">${days[menuEach.Day]} гараг</h3>
+                <h3 class="day-name">${menu.day} гараг</h3>
                 <div class="calories-badge">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
                     </svg>
-                    <span>1500 Kcal</span>
+                    <span>${menu.calories}</span>
                 </div>
             </div>
             <div class="meals-grid">
                 <div class="meal-item lunch">
-                    <p class="meal-description">${menuEach.Menu}</p>
+                    <div class="meal-header">
+                        <span>☀️</span>
+                        <h4>Өдөр</h4>
+                    </div>
+                    <p class="meal-description">${menu.lunch}</p>
                 </div>
             </div>
-        </div>`;
-    });
+        </div>
+    `).join('');
 }
 
 
@@ -855,58 +851,28 @@ function renderRules() {
 
 // Events & News
 function renderEvents() {
-    const newsContainer = document.getElementById('latestNews');
     const eventsContainer = document.getElementById('upcomingEvents');
-    eventsContainer.innerHTML = ''; // clear container before rendering
-
-    const events = data.Event;
-
-    // Convert object to array
-    const eventsArray = Object.values(events);
-
-    // Separate events without dates and with dates
-    const noDate = eventsArray.filter(event => !event.Date);
-    const withDate = eventsArray.filter(event => event.Date);
-
-    // Sort events with dates in reverse chronological order (latest first)
-    withDate.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-
-    // Combine no-date events first, then dated events
-    const finalEvents = [...noDate, ...withDate];
-
-    // Render events
-    finalEvents.forEach(eventsupd => {
-        // Generate dark RGB color
-        const r = Math.floor(Math.random() * 101);
-        const g = Math.floor(Math.random() * 101);
-        const b = Math.floor(Math.random() * 101);
-        const rgb = `rgb(${r}, ${g}, ${b})`;
-
-        const imgsrc = eventsupd.imageUrl;
-
-        eventsContainer.innerHTML += `
-            <div class="event-card" style="background: ${rgb}">
-                <div class="event-header">
-                    <div class="event-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                        </svg>
-                    </div>
+    const newsContainer = document.getElementById('latestNews');
+    
+    eventsContainer.innerHTML = events.map(event => `
+        <div class="event-card" style="background: ${event.color}">
+            <div class="event-header">
+                <div class="event-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                    </svg>
                 </div>
-                <h3 class="event-title">${eventsupd.Title}</h3>
-                <div class="event-details">
-                    <p>📅 ${eventsupd.Date || 'TBD'}</p>
-                    <div>
-                        <img src="${imgsrc}" alt="" class="eventimg">
-                    </div>
-                    <p style="padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.2)">
-                        ${eventsupd.Sub}
-                    </p>
-                </div>
+                <span class="event-type">${event.type}</span>
             </div>
-        `;
-    });
+            <h3 class="event-title">${event.title}</h3>
+            <div class="event-details">
+                <p>📅 ${event.date}</p>
+                <p>🕐 ${event.time}</p>
+                <p>📍 ${event.location}</p>
+                <p style="padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.2)">${event.description}</p>
+            </div>
+        </div>
+    `).join('');
     
     newsContainer.innerHTML = news.map(item => `
         <div class="news-item">
@@ -971,7 +937,7 @@ const userView = document.getElementById('userView')
 
 
 login.addEventListener('click', ()=> {
-isPaused = 
+isPaused = false
    toggleTimer(true)
    updateButton(true)
    const Map = {
@@ -1193,10 +1159,6 @@ submit.addEventListener('click', ()=>{
 })
 
 
-document.getElementById('classchange').addEventListener('click', ()=> {
-    console.log('hah')
-    updateSchedule('Monday', '0')
-})
 function updateSchedule(day, num) {
     prevnum.push(num)
     if(prevnum.length == 3){
@@ -1343,71 +1305,4 @@ document.getElementById('gobacktomain').addEventListener('click', ()=>{
     document.getElementById('mainDashboard').classList.add('active')
     console.log(document.getElementById('adminpanel').classList)
     console.log(document.getElementById('mainContent').classList)
-}) 
-
-
-window.enableClubLightbox = enableClubLightbox;
-window.enableTeacherZoom = enableTeacherZoom
-window.pauseToggle = pauseToggle;
-window.changeactiveadmin = changeactiveadmin
-window.gobacktolog = gobacktolog;
-window.toggleTimer = toggleTimer;
-window.togglePlayPause = togglePlayPause;
-window.selectClass = selectClass;
-window.selectClubType = selectClubType;
-window.updateSchedule = updateSchedule;
-window.updateTeacher = updateTeacher;
-window.switchSection = switchSection;
-window.goHome = goHome;
-window.renderClassSchedule = renderClassSchedule;
-window.renderClubs = renderClubs;
-window.renderPsychologistSlots = renderPsychologistSlots;
-window.renderFoodMenu = renderFoodMenu;
-window.renderRules = renderRules;
-window.renderEvents = renderEvents;
-window.updateEventTime = updateEventTime;
-window.displaygrade = displaygrade;
-window.updateinput = updateinput;
-
-
-
-
-
-
-
-
-
-}
-  
-  // Start the async flow
-  loadDatabaseAndRun();  
-
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDf98s55S3a3TOYGYHxBf6E_JAKg99qU_E",
-    authDomain: "huviar-5b906.firebaseapp.com",
-    databaseURL: "https://huviar-5b906-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "huviar-5b906",
-    storageBucket: "huviar-5b906.firebasestorage.app",
-    messagingSenderId: "771542679477",
-    appId: "1:771542679477:web:be5456e5417b1cc93b63fc",
-    measurementId: "G-N1892M58VE"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
-
-
-
-
-window.runRestOfCode = runRestOfCode;
-
+})

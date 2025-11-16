@@ -1,48 +1,3 @@
-// Get a reference to the database
-// script.js
-import { db } from './firebase.js';
-import { getDatabase, ref, set, get, child, update, remove, push } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
-
-const dbRef = ref(db);
-
-get(dbRef)
-  .then((snapshot) => {
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      console.log(data); // prints entire database
-    } else {
-      console.log("No data available");
-    }
-  })
-  .catch((error) => {
-    console.error("Error reading data:", error);
-  });
-
-  get(dbRef).then(snapshot => {
-    if(snapshot.exists()){
-      const data = snapshot.val();
-  
-      // Access Schedule
-      console.log(data.Schedule);
-  
-      // Access all Teachers
-      console.log(data.Teachers);
-
-  
-      // Access events
-      console.log(data.Events);
-
-      // Access Clubs
-      console.log(data.Club);
-
-      // Access cook
-      console.log(data.Cook);
-    }
-  }
-  );
-
-
-
 document.getElementById('addScheduleButton').addEventListener('click', ()=> {
     try {
         const ClassName = document.getElementById('smallInput')?.value || '';
@@ -157,12 +112,17 @@ document.getElementById('addClubButton').addEventListener('click', () => {
     const clubTeacher = document.getElementById('clubTeacher')?.value || '';
     const clubLab = document.getElementById('clubLab')?.value || '';
     const clubDuration = document.getElementById('clubDuration')?.value || '';
-    const clubPurpose = document.getElementById('clubPurpose')?.value || '';
-    const clubTarget = document.getElementById('clubTarget')?.value || '';
-    addClub(clubName, clubWhen, clubTeacher, clubLab, clubDuration, clubPurpose, clubTarget);
+    const clubGrade = document.getElementById('clubGrade')?.value || '';
+    addClub(clubName, clubWhen, clubTeacher, clubLab, clubDuration, clubGrade);
 },);
 
-function addClub(name, when, teacher, lab, duration, purpose, target) {
+const today = new Date()
+const day = today.getDate()
+const month = today.getMonth()
+const year = today.getFullYear()
+console.log(day,month,year)
+
+function addClub(name, when, teacher, lab, duration, grade ) {
     if (!name) {
         console.warn("Club name is required.");
         return;
@@ -188,6 +148,7 @@ function addClub(name, when, teacher, lab, duration, purpose, target) {
                     Teacher: teacher,
                     Lab: lab,
                     Duration: duration,
+                    Grade: grade,
                 }
             };
 
