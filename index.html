@@ -40,7 +40,7 @@
         
     </header>
     <!-- Profile dropdown -->
-    <div id="profileMenu" class="profile-menu " role="menu" aria-hidden="true">
+    <div id="profileMenu" class="profile-menu none" role="menu" aria-hidden="true">
         <div class="profile-menu-item" id="profileView">Профайл</div>
         <div class="profile-menu-item" id="adminLink" >Админ самбар</div>
         <div class="profile-menu-item" id="logoutBtn">Гарах</div>
@@ -62,7 +62,7 @@
 <div id="adminpanel" class="admin-panel none">
         <div>
             <div class="admintext">
-                Admin   
+                Admin
             </div>
             <div id="gobacktomain" class="secadmintext">
                 Go Back
@@ -88,7 +88,7 @@
 
             <div id="scheduleadmin" class="adminsection adminactive">
                 <!-- Small input above -->
-                <input type="text" id="smallInput" placeholder="Enter title" class="styled-input">
+                <input type="text" id="smallInput" placeholder="Enter Grade" class="styled-input">
                 
                 <!-- Dropdown to choose days -->
                 <label for="daySelect" class="styled-label">Choose a day:</label>
@@ -139,7 +139,7 @@
                 <div class="button-container">
                     <!-- Add/Edit/Remove Inputs and Buttons -->
                     <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
-                        <input type="text" id="scheduleInput" placeholder="Enter schedule title" class="styled-input" style="flex: 1; min-width: 200px;">
+                        <input type="text" id="scheduleInput" placeholder="Enter Grade" class="styled-input" style="flex: 1; min-width: 200px;">
                         <button id="addScheduleButton" class="styled-button">Add</button>
                         <button id="removeScheduleButton" class="styled-button">Remove</button>
                     </div>
@@ -152,7 +152,7 @@
                 <h2 class="admin-title">Club Management</h2>
                 
                 <!-- Extra Input Above Club Information -->
-                <input type="text" id="clubExtraInput" placeholder="Extra Input (e.g., Club Name)" class="styled-input" style="margin-bottom: 10px;">
+                <input type="text" id="clubExtraInput" placeholder="Club name (e.g., Морин хуур)" class="styled-input" style="margin-bottom: 10px;">
             
                 <!-- Input Fields for Club Information -->
                 <div class="club-inputs">
@@ -173,14 +173,6 @@
                         <input type="text" id="removeClubInput" placeholder="Club to Remove" class="styled-input" style="margin-left: 10px; width: 150px;">
                     </div>
                 </div>
-                
-                <!-- Display Container for Club Data -->
-                <div id="clubListContainer" class="club-list-container">
-                    <h3 class="list-title">Clubs</h3>
-                    <ul id="clubList" class="club-list">
-                        <!-- Dynamic list of clubs will be added here -->
-                    </ul>
-                </div>
             </div>
 
 
@@ -192,7 +184,7 @@
                     <input type="text" id="teacherSubject" placeholder="Subject" class="styled-input">
                     <input type="text" id="teacherName" placeholder="Teacher Name" class="styled-input">
                     <input type="text" id="teacherImageUrl" placeholder="Image URL" class="styled-input">
-                    <input type="text" id="teacherAdditionalInput" placeholder="Additional Info" class="styled-input">
+                    <input type="text" id="teacherAdditionalInput" placeholder="Subject in english" class="styled-input">
                 </div>
                 
                 <!-- Buttons for Adding, Editing, and Removing Teachers -->
@@ -205,14 +197,7 @@
                         <input type="text" id="removeTeacherInput" placeholder="Teacher to Remove" class="styled-input" style="margin-left: 10px; width: 150px;">
                     </div>
                 </div>
-                
-                <!-- Display Container for Teacher Data -->
-                <div id="teacherListContainer" class="teacher-list-container">
-                    <h3 class="list-title">Teachers</h3>
-                    <ul id="teacherList" class="teacher-list">
-                        <!-- Dynamic list of teachers will be added here -->
-                    </ul>
-                </div>
+            
             </div>
 
 
@@ -236,14 +221,6 @@
                     <input type="text" id="removeTargetInput" placeholder="Enter ID or Key" class="styled-input" style="margin-left: 10px; width: 150px;">
                     <button id="removeEventButton" class="styled-button">Remove Event</button>
                 </div>
-                
-                <!-- Display Container for Event Data -->
-                <div id="eventListContainer" class="event-list-container">
-                    <h3 class="list-title">Events</h3>
-                    <ul id="eventList" class="event-list">
-                        <!-- Dynamic list of events will be added here -->
-                    </ul>
-                </div>
             </div>
 
             <div id="foodadmin" class="adminsection">
@@ -265,14 +242,6 @@
                         <input type="text" id="removeFoodInput" placeholder="Day to Remove" class="styled-input" style="margin-left: 10px; width: 150px;">
                     </div>
                 </div>
-            
-                <!-- Display Container for Food List -->
-                <div id="foodListContainer" class="teacher-list-container">
-                    <h3 class="list-title">Weekly Food List</h3>
-                    <ul id="foodList" class="teacher-list">
-                        <!-- Dynamic list of foods will be added here -->
-                    </ul>
-                </div>
             </div>
             
         </div>
@@ -292,88 +261,63 @@
             </ul>
     <!-- Main Content -->
 <main id="mainContent" class="main-content">
-       
-
-
-
-    
         <div class="container">
             <!-- Welcome/Dashboard slide -->
             <div id="mainDashboard" class="section-view active stunning-dashboard">
-                <div class="dashboard-welcome stunning-card">
-                    <h1 class="welcome-title stunning-title">Сайн байна уу!</h1>
-                    <p class="welcome-subtitle stunning-subtitle">Индра Кибер Сургуулийн мэдээллийн систем</p>
-                    <div class="welcome-content stunning-content">
-                        <p class="welcome-tagline">🌟 Бид ирээдүйн удирдагчдыг бүтээж байна</p>
-                        <p class="welcome-tagline">💡 Технологи, сур дүрэм, анхаарал</p>
-                        <p class="welcome-tagline">🚀 Хүмүүжил дээр суурилсан сургалт</p>
-                    </div>
+                <div class="welcome-card">
+                <div class="welcome-layout">
+                    <div class="welcomeclass">
+                        <div class="dashboard-welcome stunning-card">
+                            <h1 class="welcome-title stunning-title">Сайн байна уу!</h1>
+                            <p class="welcome-subtitle stunning-subtitle">Индра Кибер Сургуулийн мэдээллийн систем</p>
+                            <div class="welcome-content stunning-content">
+                                <p class="welcome-tagline">🌟 Бид ирээдүйн удирдагчдыг бүтээж байна</p>
+                                <p class="welcome-tagline">💡 Технологи, сур дүрэм, анхаарал</p>
+                                <p class="welcome-tagline">🚀 Хүмүүжил дээр суурилсан сургалт</p>
+                            </div>
+                        </div>
                 </div>
-                <div class="dashboard-widgets stunning-widgets">
-                    <div class="widget stunning-widget glassy-widget">
-                        <h3>🎉 Ойрын эвент</h3>
-                        <p>Кибер тэмцээн - 11/20</p>
+                                    <!-- Right-side compact news widgets -->
+                                    <aside class="welcome-news" id="welcomeNews">
+                                        <div class="news-footer">
+                                            <button class="view-all-news" onclick="switchSection('events')">Бүгдийг харах</button>
+                                        </div>
+                                    </aside>
                     </div>
+                    
                 </div>
-                <aside class="welcome-news glassy-slider" id="welcomeNews">
-                    <div class="slider-gradient-bg"></div>
-                    <div class="glassy-slider-content">
-                        <div class="slider-header">
-                            <h3>ШИНЭ МЭДЭЭ</h3>
-                            <small>Хамгийн сүүлд нэмэгдсэн</small>
-                        </div>
-                        <div class="slider-news-list" id="welcomeNewsSlider">
-                            <div class="slider-item active">
-                                <h4>Indra Cyber School шинэ лаборатори нээгдлээ!</h4>
-                                <p>2025 оны 11-р сарын 15-нд шинэ лаборатори ашиглалтад орлоо.</p>
-                            </div>
-                            <div class="slider-item">
-                                <h4>Сурагчдын олимпиадын амжилт</h4>
-                                <p>Манай сурагчид улсын олимпиадад амжилттай оролцлоо.</p>
-                            </div>
-                            <div class="slider-item">
-                                <h4>Шинэ клубууд нэмэгдлээ</h4>
-                                <p>2025-2026 оны хичээлийн жилд шинээр 3 клуб нээгдлээ.</p>
+
+                <!-- Welcome layout: left content + right news widgets -->
+                
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div>
+                                <strong>Байршил:</strong> ХУД 24-р хороо Belmonte Luxury Residence ИНДРА КИБЕР СУРГУУЛЬ, Ulaanbaatar, Mongolia, Ulaanbaatar, Mongolia
                             </div>
                         </div>
-                        <div class="slider-controls">
-                            <button class="slider-prev">&#8592;</button>
-                            <button class="slider-next">&#8594;</button>
+                        <div class="info-item">
+                            <span class="info-icon">📞</span>
+                            <div>
+                                <strong>Холбоо:</strong> 7277 3030
+                            </div>
                         </div>
-                        <div class="slider-footer">
-                            <button class="view-all-news" onclick="switchSection('events')">Бүгдийг харах</button>
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            <div>
+                                <strong>Имэйл:</strong> indra@amjilt.com
+                            </div>
                         </div>
-                    </div>
-                </aside>
-                <div class="dashboard-info stunning-info">
-                    <div class="info-item glassy-widget">
-                        <span class="info-icon">📍</span>
-                        <div>
-                            <strong>Байршил:</strong> ХУД 24-р хороо Belmonte Luxury Residence ИНДРА КИБЕР СУРГУУЛЬ, Ulaanbaatar, Mongolia
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            <div>
+                                <strong>Instagram:</strong> <a class="infotargetainstagram" href="https://www.instagram.com/indra.cyber.school" target="_blank">indra.cyber.school                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="info-item glassy-widget">
-                        <span class="info-icon">📞</span>
-                        <div>
-                            <strong>Холбоо:</strong> 7277 3030
-                        </div>
-                    </div>
-                    <div class="info-item glassy-widget">
-                        <span class="info-icon">✉️</span>
-                        <div>
-                            <strong>Имэйл:</strong> indra@amjilt.com
-                        </div>
-                    </div>
-                    <div class="info-item glassy-widget">
-                        <span class="info-icon">📸</span>
-                        <div>
-                            <strong>Instagram:</strong> <a class="infotargetainstagram" href="https://www.instagram.com/indra.cyber.school" target="_blank">indra.cyber.school</a>
-                        </div>
-                    </div>
-                    <div class="info-item glassy-widget">
-                        <span class="info-icon">📘</span>
-                        <div>
-                            <strong>Facebook:</strong> <a class="infotargetafacebook" target="_blank" href="https://www.facebook.com/indra.cyber.school">Indra Cyber School</a>
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            <div>
+                                <strong>Facebook:</strong> <a class="infotargetafacebook" target="_blank" href="https://www.facebook.com/indra.cyber.school">Indra Cyber School</a>
+                            </div>
                         </div>
                     </div>
                 </div>
