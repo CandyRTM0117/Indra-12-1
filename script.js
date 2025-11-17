@@ -1,3 +1,41 @@
+// --- Stunning Glassy Slider Functionality ---
+document.addEventListener('DOMContentLoaded', function () {
+    // Slider logic for welcomeNews
+    const slider = document.getElementById('welcomeNewsSlider');
+    if (slider) {
+        const items = slider.querySelectorAll('.slider-item');
+        let current = 0;
+        const prevBtn = document.querySelector('.slider-prev');
+        const nextBtn = document.querySelector('.slider-next');
+        function showSlide(idx) {
+            items.forEach((item, i) => {
+                item.classList.toggle('active', i === idx);
+            });
+        }
+        function nextSlide() {
+            current = (current + 1) % items.length;
+            showSlide(current);
+        }
+        function prevSlide() {
+            current = (current - 1 + items.length) % items.length;
+            showSlide(current);
+        }
+        if (nextBtn && prevBtn) {
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+        }
+        // Auto-slide every 6 seconds
+        setInterval(nextSlide, 6000);
+        showSlide(current);
+    }
+
+    // Add animated gradient background if not present
+    if (!document.querySelector('.animated-gradient-bg')) {
+        const bg = document.createElement('div');
+        bg.className = 'animated-gradient-bg';
+        document.body.prepend(bg);
+    }
+});
 // Get a reference to the database
 // script.js
 import { db } from './firebase.js';
