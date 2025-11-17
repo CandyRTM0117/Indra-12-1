@@ -36,8 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.prepend(bg);
     }
 });
-// Get a reference to the database
-// script.js
 import { db } from './firebase.js';
 import { getDatabase, ref, set, get, child, update, remove, push } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
 
@@ -1018,46 +1016,67 @@ function renderEvents() {
     });
 }
 
+document.getElementById('welcomeNews').addEventListener('click', () => {
+    switchSection('events')
+})
+
 // Render latest news into the compact welcome widget
 function renderLatestNews() {
-    const container = document.getElementById('welcomeNewsList');
-    if (!container) return;
+    const eventsContainer = document.getElementById('welcomeNews');
+    eventsContainer.innerHTML = ''; // clear container before rendering
 
-    try {
-        // Ensure `news` array exists in this script
-        if (!Array.isArray(news) || news.length === 0) {
-            container.innerHTML = '<div class="news-empty">Мэдээ олдсонгүй</div>';
-            return;
-        }
+    const events = data.Event;
 
-        // Sort by date descending (newest first)
-        const sorted = news.slice().sort((a,b) => new Date(b.date) - new Date(a.date));
-        const maxItems = 3;
-        const items = sorted.slice(0, maxItems);
+    // Convert object to array
+    const eventsArray = Object.values(events);
 
-        container.innerHTML = items.map(item => {
-            const excerpt = item.content.length > 110 ? item.content.slice(0,110).trim() + '…' : item.content;
-            return `
-                <div class="news-item-compact" data-title="${escapeHtml(item.title)}">
-                    <div class="news-body">
-                        <div class="news-title">${escapeHtml(item.title)}</div>
-                        <div class="news-meta">${item.date}</div>
-                        <div class="news-excerpt">${escapeHtml(excerpt)}</div>
-                    </div>
-                </div>
-            `;
-        }).join('');
+    // Separate events without dates and with dates
+    const noDate = eventsArray.filter(event => !event.Date);
+    const withDate = eventsArray.filter(event => event.Date);
 
-        // Attach click handlers to open news/events page
-        container.querySelectorAll('.news-item-compact').forEach(el => {
-            el.addEventListener('click', () => {
-                // Navigate to events/news section
-                switchSection('events');
-            });
-        });
-    } catch (e) {
-        console.error('renderLatestNews error', e);
-    }
+    // Sort events with dates in reverse chronological order (latest first)
+    withDate.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
+    // Combine no-date events first, then dated events
+    const finalEvents = [...noDate, ...withDate];
+
+    // Render events
+// Pick one random event
+const randomIndex = Math.floor(Math.random() * finalEvents.length);
+const eventsupd = finalEvents[randomIndex];
+
+// Generate dark RGB color
+const r = Math.floor(Math.random() * 70) + 180; // 180–250
+const g = Math.floor(Math.random() * 70) + 180;
+const b = Math.floor(Math.random() * 70) + 180;
+
+const rgb = `rgb(${r}, ${g}, ${b})`;
+
+const imgsrc = eventsupd.imageUrl;
+
+eventsContainer.innerHTML += `
+    <div class="news-style">
+        <div class="event-header">
+            <div class="event-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                </svg>
+            </div>
+        </div>
+        <h3 class="event-title">${eventsupd.Title}</h3>
+        <div class="event-details">
+            <p>📅 ${eventsupd.Date || 'TBD'}</p>
+            <div>
+                <img src="${imgsrc}" id="eventimg" alt="" class="eventimg">
+            </div>
+            <p style="padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.2)">
+                ${eventsupd.Sub}
+            </p>
+        </div>
+    </div>
+`;
+
 }
 
 // small helper: escape HTML to avoid injection when inserting titles/content
@@ -1113,7 +1132,8 @@ const login = document.getElementById("loginuser")
 const userView = document.getElementById('userView')
 
 
-login.addEventListener('click', ()=> { 
+login.addEventListener('click', ()=> {
+    console.log('hi')
    toggleTimer(true)
    updateSliderPlayPauseUI(true)
    const Map = {
@@ -1129,11 +1149,11 @@ login.addEventListener('click', ()=> {
     
     for( let i = 1; i <= 8 ; i++){
         let a = document.getElementById(Map[i]).classList
-        if(a.length == 2){
+        if(a.length == 2 || a.length == 3){
             a.remove('active')
-            userView.classList.add('active')
         }
     }
+    userView.classList.add('active')
     toggleSidebar(false)
 })
 
@@ -1186,75 +1206,7 @@ function chooseactive () {
         teacher.style.fontSize = '20px' 
     }
 }
-
-// --- Profile menu, dark-mode toggle, and teacher-admin helper ---
-const profileBtn = document.getElementById('profileBtn');
-const profileMenu = document.getElementById('profileMenu');
-const adminLink = document.getElementById('adminLink');
-const logoutBtn = document.getElementById('logoutBtn');
-const profileView = document.getElementById('profileView');
-
-function isTeacher() {
-    return localStorage.getItem('userRole') === 'teacher';
-}
-
-function updateProfileMenu() {
-    if (!profileMenu) return;
-    // show admin link only for teacher
-    if (isTeacher()) {
-        adminLink.style.display = 'block';
-    } else {
-        adminLink.style.display = 'none';
-    }
-}
-
-profileBtn && profileBtn.addEventListener('click', (e)=>{
-    if(!profileMenu) return;
-    const isHidden = profileMenu.classList.contains('none');
-    document.querySelectorAll('.profile-menu').forEach(el=>el.classList.add('none'));
-    if(isHidden) profileMenu.classList.remove('none');
-    else profileMenu.classList.add('none');
-});
-
-// Click handlers
-adminLink && adminLink.addEventListener('click', ()=>{
-    // If teacher, open admin panel, else prompt
-    if(isTeacher()){
-        document.getElementById('adminpanel').classList.remove('none');
-        document.getElementById('adminpanel').scrollIntoView({behavior:'smooth'});
-    } else {
-        alert('Танд админ эрх байхгүй байна. Нэвтэрч орно уу.');
-    }
-    profileMenu.classList.add('none');
-});
-
-logoutBtn && logoutBtn.addEventListener('click', ()=>{
-    localStorage.removeItem('userRole');
-    document.getElementById('loginuser').innerText = 'Нэвтрэх / Бүртгүүлэх';
-    updateProfileMenu();
-    profileMenu.classList.add('none');
-});
-
-profileView && profileView.addEventListener('click', ()=>{
-    alert('Профайл үзэх (таны функц энд байршина)');
-    profileMenu.classList.add('none');
-});
-
-// Dark mode is permanent - no light mode option
-function setDarkMode(){
-    const root = document.documentElement;
-    root.classList.add('dark');
-}
-
-// Initialize dark mode on startup
-try{
-    setDarkMode();
-}catch(e){console.warn(e)}
-
-// (Removed quick teacher login helper — use real login page)
-
-// update on load
-updateProfileMenu();
+let loginsuccess = false
 
 let inputtypeusername =  true
 
@@ -1265,7 +1217,6 @@ const passbar = document.getElementById('passwordbar')
 const usernameselect = document.getElementById('username')
 const teacherselect = document.getElementById('email')
 const wrongtext = document.getElementById('wrongunpw')
-let loginsuccess = false
 // passbar.style.opacity = '0'
 
 function updateinput(input){
@@ -1380,7 +1331,7 @@ submit.addEventListener('click', ()=>{
     }
     if(parentactive){
         if(matchedpw && matchedun){
-            userView.classList.remove('active')``
+            userView.classList.remove('active')
             document.getElementById('mainDashboard').classList.add('active')
             loginsuccess = true
             displaygrade(true)
@@ -1401,7 +1352,79 @@ submit.addEventListener('click', ()=>{
             loginsuccess = false
         }
     }
+    profileprefix()
 })
+
+function profileprefix (){
+    // --- Profile menu, dark-mode toggle, and teacher-admin helper ---
+const profileBtn = document.getElementById('profileBtn');
+const profileMenu = document.getElementById('profileMenu');
+const adminLink = document.getElementById('adminLink');
+const logoutBtn = document.getElementById('logoutBtn');
+const profileView = document.getElementById('profileView');
+
+function isTeacher() {
+    return localStorage.getItem('userRole') === 'teacher';
+}
+
+function updateProfileMenu() {
+    if (!profileMenu) return;
+    // show admin link only for teacher
+    if (isTeacher()) {
+        adminLink.style.display = 'block';
+    } else {
+        adminLink.style.display = 'none';
+    }
+}
+
+profileBtn && profileBtn.addEventListener('click', (e)=>{
+    if(!profileMenu) return;
+    const isHidden = profileMenu.classList.contains('none');
+    document.querySelectorAll('.profile-menu').forEach(el=>el.classList.add('none'));
+    if(isHidden) profileMenu.classList.remove('none');
+    else profileMenu.classList.add('none');
+});
+
+// Click handlers
+adminLink && adminLink.addEventListener('click', ()=>{
+    // If teacher, open admin panel, else prompt
+    if(isTeacher()){
+        document.getElementById('adminpanel').classList.remove('none');
+        document.getElementById('adminpanel').scrollIntoView({behavior:'smooth'});
+    } else {
+        alert('Танд админ эрх байхгүй байна. Нэвтэрч орно уу.');
+    }
+    profileMenu.classList.add('none');
+});
+
+logoutBtn && logoutBtn.addEventListener('click', ()=>{
+    localStorage.removeItem('userRole');
+    document.getElementById('loginuser').innerText = 'Нэвтрэх / Бүртгүүлэх';
+    updateProfileMenu();
+    profileMenu.classList.add('none');
+});
+
+profileView && profileView.addEventListener('click', ()=>{
+    alert('Профайл үзэх (таны функц энд байршина)');
+    profileMenu.classList.add('none');
+});
+
+// Dark mode is permanent - no light mode option
+function setDarkMode(){
+    const root = document.documentElement;
+    root.classList.add('dark');
+}
+
+// Initialize dark mode on startup
+try{
+    setDarkMode();
+}catch(e){console.warn(e)}
+
+// (Removed quick teacher login helper — use real login page)
+
+// update on load
+updateProfileMenu();
+}
 
 
 const signup = document.getElementById('signup')
