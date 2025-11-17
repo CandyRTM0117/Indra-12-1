@@ -8,7 +8,11 @@
     
 </head>
 <body>
-    
+        <div id="loadingScreen">
+        <div class="loader"></div>
+        <p>Loading...</p>
+      </div>
+
         <!-- Header -->
    
     <header class="header">
@@ -288,34 +292,33 @@
 
 
     
-    <div id="header-line"></div>
         <div class="container">
             <!-- Welcome/Dashboard slide -->
             <div id="mainDashboard" class="section-view active">
                 <div class="welcome-card">
-                    <h1 class="welcome-title">Сайн байна уу!</h1>
-                    <p class="welcome-subtitle">Индра Кибер Сургуулийн мэдээллийн систем</p>
-                    <div class="welcome-content">
-                        <p class="welcome-tagline">🌟 Бид ирээдүйн удирдагчдыг бүтээж байна</p>
-                        <p class="welcome-tagline">💡 Технологи, сур дүрэм, анхаарал</p>
-                        <p class="welcome-tagline">🚀 Хүмүүжил дээр суурилсан сургалт</p>
-                        <div class="welcome-layout">
-                    
-
-                    <!-- Right-side compact news widgets -->
-                    <aside class="welcome-news" id="welcomeNews">
-                        <div class="news-header">
-                            <h3>ШИНЭ МЭДЭЭ</h3>
-                            <small>Хамгийн сүүлд нэмэгдсэн</small>
-                        </div>
-                        <div class="news-list" id="welcomeNewsList">
-                            <!-- Filled by JS with latest 2-3 news items -->
-                        </div>
-                        <div class="news-footer">
-                            <button class="view-all-news" onclick="switchSection('events')">Бүгдийг харах</button>
-                        </div>
-                    </aside>
+                <div class="welcome-layout">
+                    <div class="welcomeclass">
+                        <h1 class="welcome-title">Сайн байна уу!</h1>
+                        <p class="welcome-subtitle">Индра Кибер Сургуулийн мэдээллийн систем</p>
+                        <div class="welcome-content">
+                            <p class="welcome-tagline">🌟 Бид ирээдүйн удирдагчдыг бүтээж байна</p>
+                            <p class="welcome-tagline">💡 Технологи, сур дүрэм, анхаарал</p>
+                            <p class="welcome-tagline">🚀 Хүмүүжил дээр суурилсан сургалт</p>
+                    </div>
                 </div>
+                                    <!-- Right-side compact news widgets -->
+                                    <aside class="welcome-news" id="welcomeNews">
+                                        <div class="news-header">
+                                            <h3>ШИНЭ МЭДЭЭ</h3>
+                                            <small>Хамгийн сүүлд нэмэгдсэн</small>
+                                        </div>
+                                        <div class="news-list" id="welcomeNewsList">
+                                            <!-- Filled by JS with latest 2-3 news items -->
+                                        </div>
+                                        <div class="news-footer">
+                                            <button class="view-all-news" onclick="switchSection('events')">Бүгдийг харах</button>
+                                        </div>
+                                    </aside>
                     </div>
                     
                 </div>
@@ -325,19 +328,31 @@
                         <div class="info-item">
                             <span class="info-icon">📍</span>
                             <div>
-                                <strong>Байршил:</strong> Улаанбаатар, Баянзүрх дүүрэг
+                                <strong>Байршил:</strong> ХУД 24-р хороо Belmonte Luxury Residence ИНДРА КИБЕР СУРГУУЛЬ, Ulaanbaatar, Mongolia, Ulaanbaatar, Mongolia
                             </div>
                         </div>
                         <div class="info-item">
                             <span class="info-icon">📞</span>
                             <div>
-                                <strong>Холбоо:</strong> 1234-5678
+                                <strong>Холбоо:</strong> 7277 3030
                             </div>
                         </div>
                         <div class="info-item">
                             <span class="info-icon">✉️</span>
                             <div>
-                                <strong>Имэйл:</strong> info@indraschool.mn
+                                <strong>Имэйл:</strong> indra@amjilt.com
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            <div>
+                                <strong>Instagram:</strong> <a class="infotargetainstagram" href="https://www.instagram.com/indra.cyber.school" target="_blank">indra.cyber.school                                </a>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            <div>
+                                <strong>Facebook:</strong> <a class="infotargetafacebook" target="_blank" href="https://www.facebook.com/indra.cyber.school">Indra Cyber School</a>
                             </div>
                         </div>
                     </div>
@@ -365,8 +380,11 @@
 
                 <div id="scheduleList">
                     <div class="schedule-content">
+                        <div class="schedule-warning" id="schedulewarning">
+                            Ангиа сонгоно уу.
+                        </div>
                         <!-- Week Days Navigation -->
-                        <div class="weekdays" id="weekDays">
+                        <div class="weekdays none" id="weekDays">
                             <button id="Monday" onclick="updateSchedule('Monday','0')" class="day-btn active" data-day="0">Даваа</button>
                             <button id="Tuesday" onclick="updateSchedule('Tuesday','1')" class="day-btn" data-day="1">Мягмар</button>
                             <button id="Wednesday" onclick="updateSchedule('Wednesday','2')" class="day-btn" data-day="2">Лхагва</button>
@@ -375,7 +393,7 @@
                         </div>
             
                         <!-- Schedule List -->
-                        <div class="schedule-list" id="scheduleLists">
+                        <div class="schedule-list none" id="scheduleLists">
                             <!-- Schedule items will be populated by JavaScript -->
                         </div>
                     </div>
@@ -421,10 +439,9 @@
                     <div class="info-card">
                         <h3>Сэтгэлзүйч</h3>
                         <div class="info-details">
-                            <p><span class="label-cyan"></span> С.Цэнд-Аюуш</p>
-                            
-                            
-                            
+                            <p><span class="label-cyan">Нэр:</span> С.Цэнд-Аюуш</p>
+                            <p><span class="label-cyan">Мэргэжил:</span> Сэтгэлзүй</p>
+                            <p><span class="label-cyan">Утас:</span> +976 99 95-2158</p>
                         </div>
                     </div>
 
@@ -452,17 +469,6 @@
                 </div>
 
                 <div id="availableSlots" class="available-slots" style="display: none;"></div>
-
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-box green"></div>
-                        <span>Нээлттэй</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-box red"></div>
-                        <span>Захиалагдсан</span>
-                    </div>
-                </div>
             </div>
 
             <!-- Food Menu View -->
@@ -569,7 +575,7 @@
                     </div>
                 </div>
 
-                <div class="news-section">
+                <!-- <div class="news-section">
                     <h2 class="subsection-title">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
@@ -577,7 +583,7 @@
                         Сүүлийн мэдээ
                     </h2>
                     <div id="latestNews" class="news-list"></div>
-                </div>
+                </div> -->
 
                 <div class="auto-update-notice">
                     <p>⚡ Мэдээлэл автоматаар шинэчлэгдэнэ. Дараагийн шинэчлэл: <span id="nextUpdate"></span></p>
@@ -677,12 +683,9 @@
             </div>
             <!-- Slider footer with play/pause and timer -->
             <div class="slider-footer">
+                <div id="header-line"></div>
                 <button class="play-pause-btn" id="sliderPlayPauseBtn" title="Play/Pause auto-slide">
-                    <svg class="progress-ring-svg" viewBox="0 0 100 100" width="56" height="56">
-                        <circle cx="50" cy="50" r="45" class="progress-ring-bg"></circle>
-                        <circle cx="50" cy="50" r="45" class="progress-ring-fill" style="stroke-dasharray: 282.7; stroke-dashoffset: 282.7;"></circle>
-                    </svg>
-                    <span class="play-pause-icon">▶</span>
+                    <span class="play-pause-icon">⏸</span>
                 </button>
             </div>
         </div>
@@ -698,12 +701,6 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>Цэс</h2>
-            <button id="closeSidebar" class="close-btn">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
         </div>
 
         <nav class="sidebar-nav">
@@ -759,29 +756,6 @@
             <div id="gradeuser" class="login-user">Хичээлийн дүн</div>
         </div>
     </aside>
-
-        <!-- Nothing from v11 needed -->
-        <!-- <script type="module">
-            // Import the functions you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-            import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
-        
-            // Your Firebase config
-            const firebaseConfig = {
-            apiKey: "AIzaSyDf98s55S3a3TOYGYHxBf6E_JAKg99qU_E",
-            authDomain: "huviar-5b906.firebaseapp.com",
-            databaseURL: "https://huviar-5b906-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "huviar-5b906",
-            storageBucket: "huviar-5b906.firebasestorage.app",
-            messagingSenderId: "771542679477",
-            appId: "1:771542679477:web:be5456e5417b1cc93b63fc",
-            measurementId: "G-N1892M58VE"
-            };
-        
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const db = getDatabase(app);
-        </script>  -->
   <script type="module" src="script.js"></script>
   <script type="module" src="function.js"></script>
     <script>

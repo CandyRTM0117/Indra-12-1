@@ -9,21 +9,29 @@ let database = null
 
 
 async function loadDatabaseAndRun() {
+    // SHOW LOADING
+    document.getElementById("loadingScreen").style.display = "flex";
+  
     try {
-      const snapshot = await get(dbRef);
+        const snapshot = await get(dbRef);
   
-      if (!snapshot.exists()) {
-        console.log("No data available");
-        return; // stop if no data
-      }
+        if (!snapshot.exists()) {
+            console.log("No data available");
+            return;
+        }
   
-      const data = snapshot.val();
-      database = data;
-      // ... your remaining 1000 lines of code here
-      runRestOfCode(data);
+        const data = snapshot.val();
+        database = data;
+  
+        // RUN USER CODE
+        runRestOfCode(data);
   
     } catch (error) {
-      console.error("Error reading data:", error);
+        console.error("Error reading data:", error);
+  
+    } finally {
+        // HIDE LOADING
+        document.getElementById("loadingScreen").style.display = "none";
     }
   }
 
@@ -46,7 +54,7 @@ let prevnum = []
 // State
 let currentSection = 'main';
 let sidebarOpen = false;
-let selectedClass = '12-1';
+let selectedClass = '';
 let selectedClubType = 'Бүгд';
 let carouselIndex = 0;
 
@@ -208,13 +216,8 @@ const news = [
 const mainContent = document.getElementById('mainContent');
 const sidebar = document.getElementById('sidebar');
 const sidebarToggle = document.getElementById('sidebarToggle');
-const closeSidebar = document.getElementById('closeSidebar');
 const homeBtn = document.getElementById('homeBtn');
 const navItems = document.querySelectorAll('.nav-item');
-
-
-
-
 
 
 
@@ -222,7 +225,7 @@ const navItems = document.querySelectorAll('.nav-item');
 const headerline = document.getElementById("header-line")
 
 let time = 0;
-let loopvalue = 1;
+let loopvalue = 0;
 let maxseconds = 15;
 let timer = null; // store interval ID
 
@@ -233,7 +236,7 @@ let isRunning = false; // track state
 
 
 
-let isPaused = true;
+let isPaused = false;
 let isPausedatStart = 0;
 
 // Get elements
@@ -243,132 +246,83 @@ const icon = document.getElementById('buttonIcon');
 
 function pauseToggle (){
     if(isPausedatStart === 0){
-        toggleTimer(false)
-        isPaused = true
-        updateButton()
+        toggleTimer(isPaused)
+        updateSliderPlayPauseUI(false)
     }
     isPausedatStart = 1
-
-}
-
-function updateButton() {
-  if (!isPaused) {
-    // Show Pause icon (currently playing)
-    icon.innerHTML = `
-      <div class="pause-icon">
-        <div class="pause-bar"></div>
-        <div class="pause-bar"></div>
-      </div>
-    `;
-  } else {
-    // Show Play icon (currently paused)
-    icon.innerHTML = '<div class="play-icon"></div>';
-  }
 }
 
 
-
-function toggleTimer(shouldStop){
-    // If asked to stop, clear and return
-    if (shouldStop) {
-        if (timer) {
-            clearInterval(timer);
-            timer = null;
-            console.log('Auto-slide stopped');
-        }
-        return;
-    }
-
-    // If already running, do nothing
-    if (timer) return;
-
-    // Only start when not paused
-    if (isPaused === false) {
-        console.log('Auto-slide started');
+function toggleTimer(num){
+    console.log(num + ' - inside toggletimer')
+    if(num === true){
+        clearInterval(timer)
+    }else {
+    if ( isPaused === false ) {
         timer = setInterval(() => {
-            try {
-                let percentage = (time / maxseconds) * 100;
-                headerline && (headerline.style.width = percentage + "%");
-                time += 0.01; // add 0.01 second
-
-                // Update slider button progress ring
-                if(sliderPlayPauseBtn) {
-                    const progressRing = sliderPlayPauseBtn.querySelector('.progress-ring-fill');
-                    if(progressRing) {
-                        const circumference = 282.7;
-                        const offset = circumference - (percentage / 100) * circumference;
-                        progressRing.style.strokeDashoffset = offset;
-                    }
+            let percentage = (time / maxseconds) * 100;
+            let percentages = percentage;
+            headerline.style.background = `conic-gradient(from 0deg, white 0% ${percentages}%, transparent ${percentages}% 100%)`;
+            time += 0.01; // add 0.01 second
+    
+            if (time >= 15.00) {
+                time = 0;
+                loopvalue += 1;
+    
+                if (loopvalue >= 8) {
+                    loopvalue = 1;
                 }
-
-                // Update header play button progress ring (around header button)
-                if (button) {
-                    const headerRing = button.querySelector('.progress-ring-fill');
-                    if (headerRing) {
-                        const circumference = 282.7;
-                        const offset = circumference - (percentage / 100) * circumference;
-                        headerRing.style.strokeDashoffset = offset;
-                    }
-                }
-
-                if (time >= maxseconds) {
-                    time = 0;
-
-                    // Reset progress rings to full
-                    if(sliderPlayPauseBtn) {
-                        const progressRing = sliderPlayPauseBtn.querySelector('.progress-ring-fill');
-                        if(progressRing) progressRing.style.strokeDashoffset = 282.7;
-                    }
-                    if (button) {
-                        const headerRing = button.querySelector('.progress-ring-fill');
-                        if (headerRing) headerRing.style.strokeDashoffset = 282.7;
-                    }
-
-                    loopvalue += 1;
-
-                    // Wrap after 8 so value 8 is included
-                    if (loopvalue > 8) {
-                        loopvalue = 1;
-                    }
-
-                    // remove 'active' from all (guard each element)
-                    const sections = [
-                        'mainDashboard', 'scheduleView', 'clubsView',
-                        'psychologistView', 'foodView', 'rulesView', 'eventsView', 'teacherView'
-                    ];
-                    sections.forEach(id => {
-                        const el = document.getElementById(id);
-                        if (el && el.classList) el.classList.remove('active');
-                    });
-
-                    // add 'active' to the right one
-                    const activeMap = {
-                        1: 'mainDashboard',
-                        2: 'scheduleView',
-                        3: 'clubsView',
-                        4: 'psychologistView',
-                        5: 'foodView',
-                        6: 'rulesView',
-                        7: 'eventsView',
-                        8: 'teacherView'
-                    };
-
-                    const nextSection = document.getElementById(activeMap[loopvalue]);
-                    if(nextSection && nextSection.classList) nextSection.classList.add('active');
-                }
-            } catch (e) {
-                console.error('Auto-slide error:', e);
+    
+                // remove 'active' from all
+                const sections = [
+                    'mainDashboard', 'scheduleView', 'clubsView',
+                    'psychologistView', 'foodView', 'rulesView', 'eventsView', 'teacherView'
+                ];
+                sections.forEach(id => document.getElementById(id).classList.remove('active'));
+    
+                // add 'active' to the right one
+                const activeMap = {
+                    1: 'scheduleView',
+                    2: 'clubsView',
+                    3: 'psychologistView',
+                    4: 'foodView',
+                    5: 'rulesView',
+                    6: 'eventsView',
+                    7: 'mainDashboard',
+                    8: 'teacherView'
+                };
+                console.log(loopvalue)
+                document.getElementById(activeMap[loopvalue]).classList.add('active');
             }
-        }, 10); // 10ms = 0.01s
+    }, 10); // 10ms = 0.01s
+    }else {
+        clearInterval(timer)
+    }
     }
 }
 
 
+// Slider auto-play control and timer - sync with main timer
+const sliderPlayPauseBtn = document.getElementById('sliderPlayPauseBtn');
 
+function updateSliderPlayPauseUI(boolean){
+    if(boolean === false){
+        sliderPlayPauseBtn.textContent = '⏸';
+        sliderPlayPauseBtn.title = 'Pause auto-slide';
+    }else {
+    if (sliderPlayPauseBtn) {
+        console.log(isPaused + ' - inside slider')
+        sliderPlayPauseBtn.textContent = isPaused ? '⏸' : '▶';
+        sliderPlayPauseBtn.title = isPaused ? 'Pause auto-slide' : 'Play auto-slide';
+    }
+}
+}
 
-
-
-
+sliderPlayPauseBtn && sliderPlayPauseBtn.addEventListener('click', () => {
+    updateSliderPlayPauseUI();
+    isPaused = !isPaused;
+    toggleTimer(isPaused); // Pass true to stop, false to start
+});
 
 
 
@@ -377,17 +331,13 @@ function toggleTimer(shouldStop){
 // Toggle function
 function togglePlayPause() {
     isPaused = !isPaused;
-    updateButton();
-    // Start or stop the main timer based on new paused state
-    // Pass `isPaused` so `toggleTimer` will clear interval when true
-    toggleTimer(isPaused);
-}
+    toggleTimer(isPaused);     // stop or start timer
+    updateSliderPlayPauseUI(); // update icon
+  }
+  
 
 // Add event listener
 button.addEventListener('click', togglePlayPause);
-
-// Initialize
-updateButton();
 
 
 
@@ -430,12 +380,12 @@ function init() {
 
     // Event listeners
     sidebarToggle.addEventListener('click', toggleSidebar);
-    closeSidebar.addEventListener('click', () => toggleSidebar(false));
     homeBtn.addEventListener('click', goHome);
     
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             const section = e.currentTarget.getAttribute('data-section');
+            console.log(section)
             switchSection(section);
         });
     });
@@ -490,9 +440,10 @@ function switchSection(section) {
         loopvalue = 6;
     }else if ( section === 'events' ){
         loopvalue = 7;
-    }else if ( section === 'teacher'){
+    }else if ( section === 'teachers'){
         loopvalue = 8;
     }
+    console.log(loopvalue)
     currentSection = section;
     
     
@@ -519,8 +470,6 @@ function switchSection(section) {
     if (viewId) {   
         document.getElementById(viewId).classList.add('active');
     }
-
-    
     toggleSidebar(false);
 }
 
@@ -613,6 +562,7 @@ function updateCarousel() {
 
 
 
+let classSelected = false
 
 
 
@@ -631,9 +581,75 @@ function renderClassSchedule() {
     updateSchedule();
 }
 
+function updateSchedule( day, num) {
+    if(classSelected === true){
+        prevnum.push(num)
+    if(prevnum.length == 3){
+        prevnum.shift()
+    }
+    let activeadd = {
+        0: 'Monday',
+        1: 'Tuesday',
+        2: 'Wednesday',
+        3: 'Thursday',
+        4: 'Friday',
+    }
+    let prevday = activeadd[prevnum[0]]
+    let curday = activeadd[prevnum[1]]
+    if(!prevday && curday){
+        document.getElementById('Monday').classList.remove('active')
+        document.getElementById(curday).classList.add('active')
+    }else if(prevday && curday){
+        document.getElementById(prevday).classList.remove('active')
+        document.getElementById(curday).classList.add('active')
+
+    }
+    let days = day || 'Monday'
+    const scheduleLists = document.getElementById('scheduleLists');
+    const schedule = scheduleData[selectedClass];
+    const scheduleday = schedule[days]
+
+    scheduleLists.innerHTML = ''
+
+    const times = {
+        1: '08:00-08:40',
+        2: '08:45-09:25',
+        3: '09:40-10:20',
+        4: '10:25-11:05',
+        5: '11:10-11:50',
+        6: '11:50-12:30',
+        7: '13:20-14:00',
+        8: '14:05-14:45',
+        9: '14:50-15:30',
+        10: '15:35-16:15'
+      };
+    for( let i = 1; i <= 10; i++){
+        if (!scheduleday[i]) continue;
+
+        // Create an HTML block for each time slot
+        scheduleLists.innerHTML += `
+            <div class="schedule-item">
+            <div class="time-badge">${times[i]}</div>
+            <div class="subject-info">
+                <h3 id="subject-text">${scheduleday[i]}</h3>
+            </div>
+            <div class="period-badge">${i}-р цаг</div>
+        </div>
+        `
+    }
+    }
+}
+
 function selectClass(cls) {
     selectedClass = cls;
+    classSelected = true
     updateSchedule('Monday','0')
+    console.log(selectedClass)
+    document.getElementById('scheduleLists').classList.remove('none')
+    document.getElementById('weekDays').classList.remove('none')
+    document.getElementById('schedulewarning').classList.add('none')
+    toggleTimer(true)
+    updateSliderPlayPauseUI(true)
     renderClassSchedule();
 }
 
@@ -732,7 +748,7 @@ function updateClubs() {
             <div class="club-card">
                 <img src="${club.url}" alt="${club.Name}" data-index="${i}">
                 <div class="club-header">
-                    <h3 class="club-name">${club.Name}, ${club.Grade}-р анги</h3>
+                    <h3 class="club-name">${club.Name} <br>  ${club.Grade}-р анги</h3>
                 </div>
             </div>
         `;
@@ -931,15 +947,16 @@ function renderEvents() {
     // Render events
     finalEvents.forEach(eventsupd => {
         // Generate dark RGB color
-        const r = Math.floor(Math.random() * 101);
-        const g = Math.floor(Math.random() * 101);
-        const b = Math.floor(Math.random() * 101);
+        const r = Math.floor(Math.random() * 70) + 180; // 130–200
+        const g = Math.floor(Math.random() * 70) + 180;
+        const b = Math.floor(Math.random() * 70) + 180;
+        
         const rgb = `rgb(${r}, ${g}, ${b})`;
 
         const imgsrc = eventsupd.imageUrl;
 
         eventsContainer.innerHTML += `
-            <div class="event-card" style="background: ${rgb}">
+            <div class="event-card">
                 <div class="event-header">
                     <div class="event-icon">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -961,24 +978,6 @@ function renderEvents() {
             </div>
         `;
     });
-    
-    newsContainer.innerHTML = news.map(item => `
-        <div class="news-item">
-            <div class="news-content">
-                <div class="news-image"></div>
-                <div class="news-text">
-                    <div class="news-date">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        <span>${item.date}</span>
-                    </div>
-                    <h3 class="news-title">${item.title}</h3>
-                    <p class="news-description">${item.content}</p>
-                </div>
-            </div>
-        </div>
-    `).join('');
 }
 
 // Render latest news into the compact welcome widget
@@ -1076,10 +1075,9 @@ const login = document.getElementById("loginuser")
 const userView = document.getElementById('userView')
 
 
-login.addEventListener('click', ()=> {
-isPaused = 
+login.addEventListener('click', ()=> { 
    toggleTimer(true)
-   updateButton(true)
+   updateSliderPlayPauseUI(true)
    const Map = {
     1: 'scheduleView',
     2: 'clubsView',
@@ -1216,28 +1214,6 @@ try{
 }catch(e){console.warn(e)}
 
 // (Removed quick teacher login helper — use real login page)
-
-// Slider auto-play control and timer - sync with main timer
-const sliderPlayPauseBtn = document.getElementById('sliderPlayPauseBtn');
-let sliderAutoPlay = true;
-
-function updateSliderPlayPauseUI() {
-    if (sliderPlayPauseBtn) {
-        sliderPlayPauseBtn.textContent = sliderAutoPlay ? '⏸' : '▶';
-        sliderPlayPauseBtn.title = sliderAutoPlay ? 'Pause auto-slide' : 'Play auto-slide';
-    }
-}
-
-sliderPlayPauseBtn && sliderPlayPauseBtn.addEventListener('click', () => {
-    sliderAutoPlay = !sliderAutoPlay;
-    updateSliderPlayPauseUI();
-    // sync with main timer - toggle play/pause
-    isPaused = !isPaused;
-    updateButton();
-    toggleTimer(isPaused); // Pass true to stop, false to start
-});
-
-updateSliderPlayPauseUI();
 
 // update on load
 updateProfileMenu();
@@ -1390,67 +1366,6 @@ submit.addEventListener('click', ()=>{
 })
 
 
-document.getElementById('classchange').addEventListener('click', ()=> {
-    console.log('hah')
-    updateSchedule('Monday', '0')
-})
-function updateSchedule(day, num) {
-    prevnum.push(num)
-    if(prevnum.length == 3){
-        prevnum.shift()
-    }
-    let activeadd = {
-        0: 'Monday',
-        1: 'Tuesday',
-        2: 'Wednesday',
-        3: 'Thursday',
-        4: 'Friday',
-    }
-    let prevday = activeadd[prevnum[0]]
-    let curday = activeadd[prevnum[1]]
-    if(!prevday && curday){
-        document.getElementById('Monday').classList.remove('active')
-        document.getElementById(curday).classList.add('active')
-    }else if(prevday && curday){
-        document.getElementById(prevday).classList.remove('active')
-        document.getElementById(curday).classList.add('active')
-
-    }
-    let days = day || 'Monday'
-    const scheduleLists = document.getElementById('scheduleLists');
-    const schedule = scheduleData[selectedClass];
-    const scheduleday = schedule[days]
-
-    scheduleLists.innerHTML = ''
-
-    const times = {
-        1: '08:00-08:40',
-        2: '08:45-09:25',
-        3: '09:40-10:20',
-        4: '10:25-11:05',
-        5: '11:10-11:50',
-        6: '11:50-12:30',
-        7: '13:20-14:00',
-        8: '14:05-14:45',
-        9: '14:50-15:30',
-        10: '15:35-16:15'
-      };
-    for( let i = 1; i <= 10; i++){
-        if (!scheduleday[i]) continue;
-
-        // Create an HTML block for each time slot
-        scheduleLists.innerHTML += `
-            <div class="schedule-item">
-            <div class="time-badge">${times[i]}</div>
-            <div class="subject-info">
-                <h3 id="subject-text">${scheduleday[i]}</h3>
-            </div>
-            <div class="period-badge">${i}-р цаг</div>
-        </div>
-        `
-    }
-}
-
 const signup = document.getElementById('signup')
 
 
@@ -1535,6 +1450,7 @@ function changeactiveadmin(key, seckey){
 }
 
 document.getElementById('gobacktomain').addEventListener('click', ()=>{
+    console.log('gobackwoking')
     document.getElementById('adminpanel').classList.add('none')
     document.getElementById('mainContent').classList.remove('none')
     document.getElementById('mainDashboard').classList.add('active')
