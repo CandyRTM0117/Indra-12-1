@@ -210,7 +210,7 @@ body {
     border: 0px solid black;
     border: none;
     border-radius: 50px;
-    box-shadow: 0 8px 20px rgba(255,255,255);
+    box-shadow: 0 0px 20px rgba(255,255,255);
     position: absolute;
     z-index: 1;
 }
@@ -241,9 +241,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--border);
     padding: 10px;
-    border-radius: 50px;
+    border-radius: 20px;
     margin: 10px;
     transition: all ease 0.4s;
 }
@@ -282,20 +281,22 @@ body {
 /* Input styling */
 .styled-input {
     width: 100%;
-    padding: 8px 10px;
+    padding: 16px 20px;
     margin-bottom: 10px;
-    border: 1px solid var(--border, #333);
-    border-radius: 4px;
+    border: 1px solid white;
+    border-radius: 8px;
     font-size: 14px;
     box-sizing: border-box;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
     background: var(--input-background, transparent);
-    color: var(--foreground);
+    color: white;
 }
 
 .styled-input:focus {
-    border-color: #007bff;
+    border-color: #fff;
+    padding: 25px 30px;
     outline: none;
+    font-size: 20px;
 }
 
 /* Label styling */
@@ -303,7 +304,7 @@ body {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #333;
+    color: white;
 }
 
 /* Select dropdown styling */
@@ -317,7 +318,7 @@ body {
     box-sizing: border-box;
     transition: border-color 0.3s ease;
     background: var(--input-background, transparent);
-    color: var(--foreground);
+    color: white;
 }
 
 .styled-select:focus {
@@ -371,12 +372,17 @@ body {
 }
 
 .adminsection {
+    color: white;
     display: none;
 }
 
 .adminsection.adminactive {
     display: flex;
     flex-direction: column;
+    gap: 50px;
+}
+input {
+    color: white;
 }
 
 /* Header */
