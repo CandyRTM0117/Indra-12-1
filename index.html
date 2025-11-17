@@ -5,21 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Индра Кибер Сургууль - Мэдээллийн Дэлгэц</title>
     <link rel="stylesheet" href="styles.css">
+    
 </head>
 <body>
-    <!-- Header -->
-    <div id="playPauseBtn" class="button" onclick="toggleTimer()">
-        <div class="button-inner">
-          <div id="buttonIcon"></div>
-        </div>
-    </div>
+    
+        <!-- Header -->
+   
     <header class="header">
-        <div id="header-line">
+        <div class="brand">
+            <!-- Inline SVG logo -->
+        
+             <img src="indra.png" width="70" height="70" viewBox="0 0 24 24" style="filter: brightness(500);" alt="">
+            </div>
+          
         </div>
+        <div class="header-right">
+            <div class="datetime">
+                <div id="timeNow" class="time">--:--:--</div>
+                <div id="dateNow" class="date">----</div>
+            </div>
+            <button id="profileBtn" class="profile-btn" title="Profile">
+                <span class="profile-initial">A</span>
+            </button>
+        </div>
+        
     </header>
+    <!-- Profile dropdown -->
+    <div id="profileMenu" class="profile-menu none" role="menu" aria-hidden="true">
+        <div class="profile-menu-item" id="profileView">Профайл</div>
+        <div class="profile-menu-item" id="adminLink" >Админ самбар</div>
+        <div class="profile-menu-item" id="logoutBtn">Гарах</div>
+    </div>
     <div class="imgclub">
         <img src="https://scontent.fuln6-1.fna.fbcdn.net/v/t39.30808-6/556898631_122162810366396943_5611423242115938312_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=zksq3Xif8EoQ7kNvwFYrhFF&_nc_oc=AdmNF8Su7uVp6LUcYq7bWb3BCBQ2V0qHOYRdsl7PIcUGKl5g0dsOuzZHTEOeLoLsSetXKKmjhLP0JCDo7IuP3Oyc&_nc_zt=23&_nc_ht=scontent.fuln6-1.fna&_nc_gid=i_Ah1VH4y3VovyY-QYsaAA&oh=00_AfhpKSP0An8Gj9NwYhKBnxk8UJFT79-nqBCxO4srEz6CKw&oe=691F7CFB" alt="" id="imgclubid" class="imgclubs none">
     </div>
+    
+         <div id="playPauseBtn" class="button">
+                <!-- Circular progress ring (driven by JS) -->
+                <svg class="progress-ring-svg" viewBox="0 0 100 100" width="64" height="64" aria-hidden="true">
+                        <circle cx="50" cy="50" r="45" class="progress-ring-bg"></circle>
+                        <circle cx="50" cy="50" r="45" class="progress-ring-fill" style="stroke-dasharray: 282.7; stroke-dashoffset: 282.7;"></circle>
+                </svg>
+                <div class="button-inner">
+                    <div id="buttonIcon"></div>
+                </div>
+        </div>
 <div id="adminpanel" class="admin-panel none">
         <div>
             <div class="admintext">
@@ -239,71 +269,78 @@
         </div>
 </div> 
 
+            <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
     <!-- Main Content -->
 <main id="mainContent" class="main-content">
+       
+
+
+
+    
+    <div id="header-line"></div>
         <div class="container">
-            <!-- Main Dashboard (default view) -->
+            <!-- Welcome/Dashboard slide -->
             <div id="mainDashboard" class="section-view active">
-                <!-- Welcome Section -->
                 <div class="welcome-card">
                     <h1 class="welcome-title">Сайн байна уу!</h1>
                     <p class="welcome-subtitle">Индра Кибер Сургуулийн мэдээллийн систем</p>
+                    <div class="welcome-content">
+                        <p class="welcome-tagline">🌟 Бид ирээдүйн удирдагчдыг бүтээж байна</p>
+                        <p class="welcome-tagline">💡 Технологи, сур дүрэм, анхаарал</p>
+                        <p class="welcome-tagline">🚀 Хүмүүжил дээр суурилсан сургалт</p>
+                        <div class="welcome-layout">
+                    
+
+                    <!-- Right-side compact news widgets -->
+                    <aside class="welcome-news" id="welcomeNews">
+                        <div class="news-header">
+                            <h3>ШИНЭ МЭДЭЭ</h3>
+                            <small>Хамгийн сүүлд нэмэгдсэн</small>
+                        </div>
+                        <div class="news-list" id="welcomeNewsList">
+                            <!-- Filled by JS with latest 2-3 news items -->
+                        </div>
+                        <div class="news-footer">
+                            <button class="view-all-news" onclick="switchSection('events')">Бүгдийг харах</button>
+                        </div>
+                    </aside>
+                </div>
+                    </div>
+                    
                 </div>
 
-                <!-- Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-card stat-blue">
-                        <div class="stat-icon">📅</div>
-                        <div class="stat-value">7</div>
-                        <div class="stat-label">Өнөөдрийн хичээл</div>
-                    </div>
-                    <div class="stat-card stat-purple">
-                        <div class="stat-icon">👥</div>
-                        <div class="stat-value">428</div>
-                        <div class="stat-label">Идэвхтэй сурагчид</div>
-                    </div>
-                    <div class="stat-card stat-green">
-                        <div class="stat-icon">📈</div>
-                        <div class="stat-value">94%</div>
-                        <div class="stat-label">Амжилтын түвшин</div>
-                    </div>
-                </div>
-
-                <!-- Announcements Carousel -->
-                <div class="announcements-carousel">
-                    <h2 class="section-title">Мэдээлэл</h2>
-                    <div class="carousel-container">
-                        <div class="carousel-slide active">
-                            <div class="announcement-content">
-                                <h3>Улирлын шалгалт эхэллээ</h3>
-                                <p>Шалгалтын хуваарийг сайтар судлаарай</p>
-                                <span class="time-badge">2 цагийн өмнө</span>
+                <!-- Welcome layout: left content + right news widgets -->
+                
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div>
+                                <strong>Байршил:</strong> Улаанбаатар, Баянзүрх дүүрэг
                             </div>
                         </div>
-                        <div class="carousel-slide">
-                            <div class="announcement-content">
-                                <h3>Роботын уралдаан</h3>
-                                <p>Бямба гараг 10:00 цагт эхэлнэ</p>
-                                <span class="time-badge">5 цагийн өмнө</span>
+                        <div class="info-item">
+                            <span class="info-icon">📞</span>
+                            <div>
+                                <strong>Холбоо:</strong> 1234-5678
                             </div>
                         </div>
-                        <div class="carousel-slide">
-                            <div class="announcement-content">
-                                <h3>Эцэг эхийн хурал</h3>
-                                <p>11-р сарын 15-нд болно</p>
-                                <span class="time-badge">1 өдрийн өмнө</span>
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            <div>
+                                <strong>Имэйл:</strong> info@indraschool.mn
                             </div>
-                        </div>
-                        <div class="carousel-indicators">
-                            <span class="indicator active"></span>
-                            <span class="indicator"></span>
-                            <span class="indicator"></span>
                         </div>
                     </div>
-                </div>
-
-                <div class="info-text">
-                    <p>Баруун талын цэсээс мэдээлэл харах боломжтой</p>
                 </div>
             </div>
 
@@ -384,10 +421,10 @@
                     <div class="info-card">
                         <h3>Сэтгэлзүйч</h3>
                         <div class="info-details">
-                            <p><span class="label-cyan">Нэр:</span> Д-р Б.Баярмаа</p>
-                            <p><span class="label-cyan">Мэргэжил:</span> Клиник сэтгэлзүй</p>
-                            <p><span class="label-cyan">Өрөө:</span> 401</p>
-                            <p><span class="label-cyan">Утас:</span> 9999-8888</p>
+                            <p><span class="label-cyan"></span> С.Цэнд-Аюуш</p>
+                            
+                            
+                            
                         </div>
                     </div>
 
@@ -414,7 +451,7 @@
                     </div>
                 </div>
 
-                <div id="availableSlots" class="available-slots"></div>
+                <div id="availableSlots" class="available-slots" style="display: none;"></div>
 
                 <div class="legend">
                     <div class="legend-item">
@@ -637,6 +674,17 @@
                     </div>
                 </div>
             </div>
+            </div>
+            <!-- Slider footer with play/pause and timer -->
+            <div class="slider-footer">
+                <button class="play-pause-btn" id="sliderPlayPauseBtn" title="Play/Pause auto-slide">
+                    <svg class="progress-ring-svg" viewBox="0 0 100 100" width="56" height="56">
+                        <circle cx="50" cy="50" r="45" class="progress-ring-bg"></circle>
+                        <circle cx="50" cy="50" r="45" class="progress-ring-fill" style="stroke-dasharray: 282.7; stroke-dashoffset: 282.7;"></circle>
+                    </svg>
+                    <span class="play-pause-icon">▶</span>
+                </button>
+            </div>
         </div>
     </main>
 
@@ -736,5 +784,21 @@
         </script>  -->
   <script type="module" src="script.js"></script>
   <script type="module" src="function.js"></script>
+    <script>
+        // Live clock for header
+        (function updateClock(){
+            function pad(n){return n.toString().padStart(2,'0')}
+            const t = document.getElementById('timeNow');
+            const d = document.getElementById('dateNow');
+            if(!t||!d) return;
+            const now = new Date();
+            const timeStr = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+            const dateStr = now.toLocaleDateString(undefined, {weekday:'short', year:'numeric', month:'short', day:'numeric'});
+            t.textContent = timeStr;
+            d.textContent = dateStr;
+            setTimeout(updateClock, 1000);
+        })();
+    </script>
+
 </body>
 </html>
