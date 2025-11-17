@@ -222,8 +222,8 @@ const navItems = document.querySelectorAll('.nav-item');
 const headerline = document.getElementById("header-line")
 
 let time = 0;
-let loopvalue = 0;
-let maxseconds = 20;
+let loopvalue = 1;
+let maxseconds = 15;
 let timer = null; // store interval ID
 
 
@@ -253,66 +253,113 @@ function pauseToggle (){
 
 function updateButton() {
   if (!isPaused) {
-    // Show Play icon
-    icon.innerHTML = '<div class="play-icon"></div>';
-  } else {
-    // Show Pause icon
+    // Show Pause icon (currently playing)
     icon.innerHTML = `
       <div class="pause-icon">
         <div class="pause-bar"></div>
         <div class="pause-bar"></div>
       </div>
     `;
+  } else {
+    // Show Play icon (currently paused)
+    icon.innerHTML = '<div class="play-icon"></div>';
   }
 }
 
 
 
-function toggleTimer(num){
-    console.log(isPaused)
-    if(num){
-        clearInterval(timer)
-    }else {
-    if ( isPaused === false ) {
-        timer = setInterval(() => {
-            let percentage = (time / maxseconds) * 100;
-            let percentages = percentage + "%";
-            headerline.style.width = percentages;
-            time += 0.01; // add 0.01 second
-    
-            if (time >= 20.00) {
-                time = 0;
-                loopvalue += 1;
-    
-                if (loopvalue >= 8) {
-                    loopvalue = 1;
-                }
-    
-                // remove 'active' from all
-                const sections = [
-                    'mainDashboard', 'scheduleView', 'clubsView',
-                    'psychologistView', 'foodView', 'rulesView', 'eventsView', 'teacherView'
-                ];
-                sections.forEach(id => document.getElementById(id).classList.remove('active'));
-    
-                // add 'active' to the right one
-                const activeMap = {
-                    1: 'scheduleView',
-                    2: 'clubsView',
-                    3: 'psychologistView',
-                    4: 'foodView',
-                    5: 'rulesView',
-                    6: 'eventsView',
-                    7: 'mainDashboard',
-                    8: 'teacherView'
-                };
-    
-                document.getElementById(activeMap[loopvalue]).classList.add('active');
-            }
-    }, 10); // 10ms = 0.01s
-    }else {
-        clearInterval(timer)
+function toggleTimer(shouldStop){
+    // If asked to stop, clear and return
+    if (shouldStop) {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+            console.log('Auto-slide stopped');
+        }
+        return;
     }
+
+    // If already running, do nothing
+    if (timer) return;
+
+    // Only start when not paused
+    if (isPaused === false) {
+        console.log('Auto-slide started');
+        timer = setInterval(() => {
+            try {
+                let percentage = (time / maxseconds) * 100;
+                headerline && (headerline.style.width = percentage + "%");
+                time += 0.01; // add 0.01 second
+
+                // Update slider button progress ring
+                if(sliderPlayPauseBtn) {
+                    const progressRing = sliderPlayPauseBtn.querySelector('.progress-ring-fill');
+                    if(progressRing) {
+                        const circumference = 282.7;
+                        const offset = circumference - (percentage / 100) * circumference;
+                        progressRing.style.strokeDashoffset = offset;
+                    }
+                }
+
+                // Update header play button progress ring (around header button)
+                if (button) {
+                    const headerRing = button.querySelector('.progress-ring-fill');
+                    if (headerRing) {
+                        const circumference = 282.7;
+                        const offset = circumference - (percentage / 100) * circumference;
+                        headerRing.style.strokeDashoffset = offset;
+                    }
+                }
+
+                if (time >= maxseconds) {
+                    time = 0;
+
+                    // Reset progress rings to full
+                    if(sliderPlayPauseBtn) {
+                        const progressRing = sliderPlayPauseBtn.querySelector('.progress-ring-fill');
+                        if(progressRing) progressRing.style.strokeDashoffset = 282.7;
+                    }
+                    if (button) {
+                        const headerRing = button.querySelector('.progress-ring-fill');
+                        if (headerRing) headerRing.style.strokeDashoffset = 282.7;
+                    }
+
+                    loopvalue += 1;
+
+                    // Wrap after 8 so value 8 is included
+                    if (loopvalue > 8) {
+                        loopvalue = 1;
+                    }
+
+                    // remove 'active' from all (guard each element)
+                    const sections = [
+                        'mainDashboard', 'scheduleView', 'clubsView',
+                        'psychologistView', 'foodView', 'rulesView', 'eventsView', 'teacherView'
+                    ];
+                    sections.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el && el.classList) el.classList.remove('active');
+                    });
+
+                    // add 'active' to the right one
+                    const activeMap = {
+                        1: 'mainDashboard',
+                        2: 'scheduleView',
+                        3: 'clubsView',
+                        4: 'psychologistView',
+                        5: 'foodView',
+                        6: 'rulesView',
+                        7: 'eventsView',
+                        8: 'teacherView'
+                    };
+
+                    const nextSection = document.getElementById(activeMap[loopvalue]);
+                    if(nextSection && nextSection.classList) nextSection.classList.add('active');
+                }
+            } catch (e) {
+                console.error('Auto-slide error:', e);
+            }
+        }, 10); // 10ms = 0.01s
     }
 }
 
@@ -329,8 +376,11 @@ function toggleTimer(num){
 
 // Toggle function
 function togglePlayPause() {
-  isPaused = !isPaused;
-  updateButton();
+    isPaused = !isPaused;
+    updateButton();
+    // Start or stop the main timer based on new paused state
+    // Pass `isPaused` so `toggleTimer` will clear interval when true
+    toggleTimer(isPaused);
 }
 
 // Add event listener
@@ -371,6 +421,8 @@ function init() {
     renderFoodMenu();
     renderRules();
     renderEvents();
+    // populate welcome news widgets
+    renderLatestNews();
     renderTeachers();
     startCarousel();
     updateEventTime();
@@ -424,21 +476,23 @@ function toggleSidebar(open) {
 }
 
 function switchSection(section) {
-    if ( section === 'schedule'){
-        loopvalue = 1
-}else if ( section === 'clubs' ){
-        loopvalue = 2
+    if ( section === 'dashboard' || section === '' ){
+        loopvalue = 1; // mainDashboard is at index 1 now
+    }else if ( section === 'schedule'){
+        loopvalue = 2;
+    }else if ( section === 'clubs' ){
+        loopvalue = 3;
     }else if ( section === 'psychologist' ){
-        loopvalue = 3
+        loopvalue = 4;
     }else if ( section === 'food' ){
-        loopvalue = 4
-        
+        loopvalue = 5;
     }else if ( section === 'rules' ){
-        loopvalue = 5
-        
+        loopvalue = 6;
     }else if ( section === 'events' ){
-        loopvalue = 6
-    }else if ( section === '')
+        loopvalue = 7;
+    }else if ( section === 'teacher'){
+        loopvalue = 8;
+    }
     currentSection = section;
     
     
@@ -927,6 +981,58 @@ function renderEvents() {
     `).join('');
 }
 
+// Render latest news into the compact welcome widget
+function renderLatestNews() {
+    const container = document.getElementById('welcomeNewsList');
+    if (!container) return;
+
+    try {
+        // Ensure `news` array exists in this script
+        if (!Array.isArray(news) || news.length === 0) {
+            container.innerHTML = '<div class="news-empty">Мэдээ олдсонгүй</div>';
+            return;
+        }
+
+        // Sort by date descending (newest first)
+        const sorted = news.slice().sort((a,b) => new Date(b.date) - new Date(a.date));
+        const maxItems = 3;
+        const items = sorted.slice(0, maxItems);
+
+        container.innerHTML = items.map(item => {
+            const excerpt = item.content.length > 110 ? item.content.slice(0,110).trim() + '…' : item.content;
+            return `
+                <div class="news-item-compact" data-title="${escapeHtml(item.title)}">
+                    <div class="news-body">
+                        <div class="news-title">${escapeHtml(item.title)}</div>
+                        <div class="news-meta">${item.date}</div>
+                        <div class="news-excerpt">${escapeHtml(excerpt)}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Attach click handlers to open news/events page
+        container.querySelectorAll('.news-item-compact').forEach(el => {
+            el.addEventListener('click', () => {
+                // Navigate to events/news section
+                switchSection('events');
+            });
+        });
+    } catch (e) {
+        console.error('renderLatestNews error', e);
+    }
+}
+
+// small helper: escape HTML to avoid injection when inserting titles/content
+function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+}
+
 
 
 
@@ -1044,6 +1150,97 @@ function chooseactive () {
         teacher.style.fontSize = '20px' 
     }
 }
+
+// --- Profile menu, dark-mode toggle, and teacher-admin helper ---
+const profileBtn = document.getElementById('profileBtn');
+const profileMenu = document.getElementById('profileMenu');
+const adminLink = document.getElementById('adminLink');
+const logoutBtn = document.getElementById('logoutBtn');
+const profileView = document.getElementById('profileView');
+
+function isTeacher() {
+    return localStorage.getItem('userRole') === 'teacher';
+}
+
+function updateProfileMenu() {
+    if (!profileMenu) return;
+    // show admin link only for teacher
+    if (isTeacher()) {
+        adminLink.style.display = 'block';
+    } else {
+        adminLink.style.display = 'none';
+    }
+}
+
+profileBtn && profileBtn.addEventListener('click', (e)=>{
+    if(!profileMenu) return;
+    const isHidden = profileMenu.classList.contains('none');
+    document.querySelectorAll('.profile-menu').forEach(el=>el.classList.add('none'));
+    if(isHidden) profileMenu.classList.remove('none');
+    else profileMenu.classList.add('none');
+});
+
+// Click handlers
+adminLink && adminLink.addEventListener('click', ()=>{
+    // If teacher, open admin panel, else prompt
+    if(isTeacher()){
+        document.getElementById('adminpanel').classList.remove('none');
+        document.getElementById('adminpanel').scrollIntoView({behavior:'smooth'});
+    } else {
+        alert('Танд админ эрх байхгүй байна. Нэвтэрч орно уу.');
+    }
+    profileMenu.classList.add('none');
+});
+
+logoutBtn && logoutBtn.addEventListener('click', ()=>{
+    localStorage.removeItem('userRole');
+    document.getElementById('loginuser').innerText = 'Нэвтрэх / Бүртгүүлэх';
+    updateProfileMenu();
+    profileMenu.classList.add('none');
+});
+
+profileView && profileView.addEventListener('click', ()=>{
+    alert('Профайл үзэх (таны функц энд байршина)');
+    profileMenu.classList.add('none');
+});
+
+// Dark mode is permanent - no light mode option
+function setDarkMode(){
+    const root = document.documentElement;
+    root.classList.add('dark');
+}
+
+// Initialize dark mode on startup
+try{
+    setDarkMode();
+}catch(e){console.warn(e)}
+
+// (Removed quick teacher login helper — use real login page)
+
+// Slider auto-play control and timer - sync with main timer
+const sliderPlayPauseBtn = document.getElementById('sliderPlayPauseBtn');
+let sliderAutoPlay = true;
+
+function updateSliderPlayPauseUI() {
+    if (sliderPlayPauseBtn) {
+        sliderPlayPauseBtn.textContent = sliderAutoPlay ? '⏸' : '▶';
+        sliderPlayPauseBtn.title = sliderAutoPlay ? 'Pause auto-slide' : 'Play auto-slide';
+    }
+}
+
+sliderPlayPauseBtn && sliderPlayPauseBtn.addEventListener('click', () => {
+    sliderAutoPlay = !sliderAutoPlay;
+    updateSliderPlayPauseUI();
+    // sync with main timer - toggle play/pause
+    isPaused = !isPaused;
+    updateButton();
+    toggleTimer(isPaused); // Pass true to stop, false to start
+});
+
+updateSliderPlayPauseUI();
+
+// update on load
+updateProfileMenu();
 
 let inputtypeusername =  true
 
